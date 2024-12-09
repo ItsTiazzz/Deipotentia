@@ -1,0 +1,28 @@
+{
+  "item.deipotentia.warped_sickle": "Warped Sickle",
+  "item.deipotentia.crimson_sickle": "Crimson Sickle",
+  "item.deipotentia.sturdy_sickle": "Sturdy Sickle",
+  "item.deipotentia.nymph_sickle": "Nymph Sickle",
+  "item.deipotentia.sturdy_template": "Sturdy Sickle Upgrade",
+  "item.deipotentia.valsoulstrangler": "The Valsoulstrangler",
+  "item.deipotentia.valsoulstrangler_deactivated": "Deactivated Relic",
+  "item.deipotentia.angels_guard": "Angel's Guard",
+  "item.deipotentia.angels_guard_deactivated": "Deactivated Relic",
+  "item.minecraft.cooked_porkchop": "Pooked Cockchop",
+
+  "misc.deipotentia.text.invalid_uuid_0": "Pffft, you don't have it in you.",
+  "misc.deipotentia.text.invalid_uuid_1": "Did you really think you're worthy?",
+  "misc.deipotentia.text.invalid_uuid_2": "No.",
+  "misc.deipotentia.text.invalid_uuid_3": "Nah look at this twink. I'm not giving power to that.",
+  "misc.deipotentia.text.enabled": "Active",
+
+  "tooltip.deipotentia.sickle.warped_sickle": "A tool capable of bringing the master's soul along when thrown.",
+  "tooltip.deipotentia.sickle.warped_sickle.sec": "Used similar to an ender pearl on right click.",
+  "tooltip.deipotentia.sickle.crimson_sickle": "A tool forged in the depths of literal hell, still hot and fresh for use.",
+  "tooltip.deipotentia.sickle.crimson_sickle.sec": "Throws a Fireball on right click.",
+  "tooltip.deipotentia.sickle.sturdy_sickle": "A tool also very handy for mashing anything in your path of cultivation.",
+  "tooltip.deipotentia.sickle.sturdy_sickle.sec": "Replenishes 50% of missing health on right click.",
+  "tooltip.deipotentia.sickle.nymph_sickle": "A tool crafted by forest Nymphs helping you in all your farming needs.",
+  "tooltip.deipotentia.sickle.nymph_sickle.sec": "Breaks other nearby crops when right clicking one.",
+  "": ""
+}

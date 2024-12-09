@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:diamond_hoe"
+    },
+    "$": {
+      "item": "minecraft:weeping_vines"
+    },
+    "@": {
+      "item": "minecraft:stick"
+    },
+    "%": {
+      "item": "minecraft:fire_charge"
+    }
+  },
+  "pattern": [
+    " % ",
+    "$#$",
+    "@  "
+  ],
+  "result": {
+    "item": "deipotentia:crimson_sickle"
+  },
+  "show_notification": true
+}

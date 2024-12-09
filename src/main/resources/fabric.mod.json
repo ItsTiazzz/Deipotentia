@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "deipotentia",
+	"version": "${version}",
+	"name": "Deipotentia",
+	"description": "Aliquando oportet perrumpere ut veram dei potentiam assequaris. Sed non omnibus adsumere licet.",
+	"authors": [
+		"Tiazzz"
+	],
+	"contact": {
+	},
+	"license": "ARR",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.tywrapstudios.deipotentia.Deipotentia"
+		],
+		"client": [
+			"net.tywrapstudios.deipotentia.DeipotentiaClient"
+		],
+		"cardinal-components": [
+			"net.tywrapstudios.deipotentia.DeipotentiaComponents"
+		],
+		"fabric-datagen": [
+			"net.tywrapstudios.deipotentia.util.datagen.DeipotentiaDataGenerator"
+		]
+	},
+	"mixins": [
+		"deipotentia.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.19.2",
+		"java": ">=17",
+		"fabric-api": "*",
+		"blossombridge": ">=1.1.1",
+		"cardinal-components": ">=5.0.2"
+	},
+	"suggests": {
+	}
+}

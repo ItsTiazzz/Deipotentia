@@ -1,0 +1,11 @@
+{
+  "type": "deipotentia:hephaestus_forging",
+  "ingredients": [
+    {
+      "item": "minecraft:shield"
+    }
+  ],
+  "result": {
+    "item": "deipotentia:angels_guard_deactivated"
+  }
+}

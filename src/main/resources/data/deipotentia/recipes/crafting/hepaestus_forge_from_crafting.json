@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:lava_bucket"
+    },
+    "$": {
+      "item": "minecraft:iron_ingot"
+    },
+    "&": {
+      "item": "minecraft:smithing_table"
+    },
+    "%": {
+      "item": "minecraft:deepslate"
+    }
+  },
+  "pattern": [
+    "$#$",
+    "$&$",
+    "%%%"
+  ],
+  "result": {
+    "item": "deipotentia:hephaestus_forge"
+  }
+}

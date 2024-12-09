@@ -1,0 +1,41 @@
+package net.tywrapstudios.deipotentia.effect;
+
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.AttributeContainer;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
+import net.tywrapstudios.deipotentia.Deipotentia;
+
+public class StrangledEffect extends StatusEffect {
+    public StrangledEffect() {
+        super(StatusEffectCategory.HARMFUL, 2293580);
+    }
+
+    @Override
+    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+        return true;
+    }
+
+    @Override
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        //freezeEntity(entity);
+    }
+
+    @Override
+    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        //unfreezeEntity(entity);
+    }
+
+    private static void freezeEntity(LivingEntity entity) {
+        entity.setVelocity(0, 0, 0);
+        entity.setNoGravity(true);
+        entity.velocityDirty = true;
+        Deipotentia.LOGGING.debug("Froze entity: " + entity);
+    }
+
+    private static void unfreezeEntity(LivingEntity entity) {
+        entity.setNoGravity(false);
+        entity.velocityDirty= false;
+        Deipotentia.LOGGING.debug("Unfroze entity: " + entity);
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:diamond_hoe"
+    },
+    "$": {
+      "item": "minecraft:twisting_vines"
+    },
+    "@": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "$#$",
+    "@  "
+  ],
+  "result": {
+    "item": "deipotentia:warped_sickle"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "base": {
+    "tag": "deipotentia:non_sturdy"
+  },
+  "result": {
+    "item": "deipotentia:sturdy_sickle"
+  }
+}

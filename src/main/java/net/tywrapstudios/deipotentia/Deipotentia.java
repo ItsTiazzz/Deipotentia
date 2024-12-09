@@ -1,0 +1,40 @@
+package net.tywrapstudios.deipotentia;
+
+import net.fabricmc.api.ModInitializer;
+
+import net.fabricmc.loader.api.FabricLoader;
+import net.tywrapstudios.blossombridge.api.config.ConfigManager;
+import net.tywrapstudios.blossombridge.api.logging.LoggingHandler;
+import net.tywrapstudios.deipotentia.config.DeiConfig;
+import net.tywrapstudios.deipotentia.registry.*;
+import net.tywrapstudios.deipotentia.registry.DEffects;
+import net.tywrapstudios.deipotentia.item.SoulItem;
+import net.tywrapstudios.deipotentia.util.EntityVelocityManipulation;
+import net.tywrapstudios.deipotentia.util.TickScheduler;
+
+import java.io.File;
+
+public class Deipotentia implements ModInitializer {
+	public static final String MOD_ID = "deipotentia";
+	public static final ConfigManager<DeiConfig> CONFIG_MANAGER = new ConfigManager<>(DeiConfig.class, new File(FabricLoader.getInstance().getConfigDir().toFile(), "deipotentia.json5"));
+	public static LoggingHandler<DeiConfig> LOGGING = new LoggingHandler<>("Deipotentia", CONFIG_MANAGER);
+
+	@Override
+	public void onInitialize() {
+		CONFIG_MANAGER.loadConfig();
+
+		DRegistry.DItems.register();
+		DRegistry.DBlocks.register();
+		DBlockEntities.register();
+		DScreenHandlers.register();
+		DRecipes.register();
+		DItemGroup.register();
+		DEffects.register();
+
+		SoulItem.Logic.initialize();
+		TickScheduler.initialize();
+		EntityVelocityManipulation.initialize();
+
+		LOGGING.info("May your woes have Deipotentia, and their wishes be granted.");
+	}
+}
