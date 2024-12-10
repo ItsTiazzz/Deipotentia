@@ -13,7 +13,7 @@ import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.registry.DTags;
 
 public class EntityVelocityManipulation {
-    private static final double GRAVITY = 0.08; // Minecraft gravity
+    public static final double GRAVITY = 0.08; // Minecraft gravity
 
     public static void launchEntity(Entity entity, double forwardDistance, double upwardHeight) {
         // Calculate vertical velocity for the desired height
@@ -78,32 +78,32 @@ public class EntityVelocityManipulation {
         });
     }
 
-    private static final double REPULSION_RADIUS = 5.0; // Radius in blocks
-    private static final double REPULSION_STRENGTH = 0.5; // Strength of the push
+    public static final double REPULSION_RADIUS = 5.0; // Radius in blocks
+    public static final double REPULSION_STRENGTH = 0.5; // Strength of the push
 
     public static void initialize() {
-        ServerTickEvents.END_WORLD_TICK.register(EntityVelocityManipulation::onWorldTick);
+//        ServerTickEvents.END_WORLD_TICK.register(EntityVelocityManipulation::onWorldTick);
     }
 
-    private static void onWorldTick(ServerWorld world) {
-        for (PlayerEntity player : world.getPlayers()) {
-            // Check if the player is holding the specific item
-            if (isHoldingRepulsionItem(player)) {
-                // Get all entities within the radius
-                Box boundingBox = player.getBoundingBox().expand(REPULSION_RADIUS);
-                for (Entity entity : world.getEntitiesByClass(Entity.class, boundingBox, e -> e != player)) {
-                    // Push the entity away
-                    pushEntityAwayFromPlayer(player, entity);
-                }
-                // Spawn particles around the player to indicate the range
-                spawnRepulsionParticles(world, player, Deipotentia.CONFIG_MANAGER.getConfig().particle_density);
-                // Freeze the player as compensation
-                freezeEntityForRepulsingItem(player);
-            }
-        }
-    }
+//    private static void onWorldTick(ServerWorld world) {
+//        for (PlayerEntity player : world.getPlayers()) {
+//            // Check if the player is holding the specific item
+//            if (isHoldingRepulsionItem(player)) {
+//                // Get all entities within the radius
+//                Box boundingBox = player.getBoundingBox().expand(REPULSION_RADIUS);
+//                for (Entity entity : world.getEntitiesByClass(Entity.class, boundingBox, e -> e != player)) {
+//                    // Push the entity away
+//                    pushEntityAwayFromPlayer(player, entity);
+//                }
+//                // Spawn particles around the player to indicate the range
+//                spawnRepulsionParticles(world, player, Deipotentia.CONFIG_MANAGER.getConfig().particle_density);
+//                // Freeze the player as compensation
+//                freezeEntityForRepulsingItem(player);
+//            }
+//        }
+//    }
 
-    private static void spawnRepulsionParticles(ServerWorld world, PlayerEntity player, int density) {
+    public static void spawnRepulsionParticles(ServerWorld world, PlayerEntity player, int density) {
         Vec3d center = player.getPos();
         double radius = REPULSION_RADIUS;
 
@@ -120,13 +120,13 @@ public class EntityVelocityManipulation {
         }
     }
 
-    private static boolean isHoldingRepulsionItem(PlayerEntity player) {
+    public static boolean isHoldingRepulsionItem(PlayerEntity player) {
         ItemStack mainHandStack = player.getMainHandStack();
         ItemStack offHandStack = player.getOffHandStack();
         return (NBTUtilities.getEnabled(mainHandStack) || NBTUtilities.getEnabled(offHandStack)) && (mainHandStack.streamTags().anyMatch(itemTagKey -> itemTagKey.isOf(DTags.Items.REPULSING.get().registry())) || offHandStack.streamTags().anyMatch(itemTagKey -> itemTagKey.isOf(DTags.Items.REPULSING.get().registry())));
     }
 
-    private static void pushEntityAwayFromPlayer(PlayerEntity player, Entity entity) {
+    public static void pushEntityAwayFromPlayer(PlayerEntity player, Entity entity) {
         Vec3d playerPos = player.getPos();
         Vec3d entityPos = entity.getPos();
 
