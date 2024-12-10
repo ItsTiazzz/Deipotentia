@@ -13,5 +13,7 @@ public class DeiConfig extends AbstractConfig {
     @Comment("Internal value to determine whether the Valsoulstrangler has been enabled.\nPreferably do not change this unless you're debugging/resetting the mod.")
     public boolean val = false;
     @Comment("The density of the particles for the Angel's Guard.")
-    public int particle_density = 250;
+    public int particle_density = 25;
+    @Comment("Set this to true to enable joke mode. (Easter eggs)")
+    public boolean joke_mode = false;
 }
