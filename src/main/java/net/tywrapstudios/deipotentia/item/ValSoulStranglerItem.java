@@ -18,7 +18,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tywrapstudios.deipotentia.util.EntityVelocityManipulation;
-import net.tywrapstudios.deipotentia.util.NBTUtilities;
+import net.tywrapstudios.deipotentia.util.NbtUtilities;
 import net.tywrapstudios.deipotentia.util.TickScheduler;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,8 +33,8 @@ public class ValSoulStranglerItem extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack T = user.getStackInHand(hand);
         if (user.isSneaking()) {
-            boolean current = NBTUtilities.toggleEnabledForStack(T);
-            if (current) {
+            boolean current = NbtUtilities.toggleEnabledForStack(T);
+            if (!current) {
                 world.playSound(null, user.getX(), user.getY(), user.getZ(),
                         SoundEvents.BLOCK_BEACON_ACTIVATE,
                         SoundCategory.NEUTRAL,
@@ -54,7 +54,7 @@ public class ValSoulStranglerItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if (NBTUtilities.getEnabled(stack)) {
+        if (NbtUtilities.getEnabled(stack)) {
             tooltip.add(Text.translatable("misc.deipotentia.text.enabled").formatted(Formatting.DARK_GREEN));
         }
     }

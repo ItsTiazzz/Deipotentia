@@ -11,6 +11,7 @@
 	},
 	"license": "ARR",
 	"environment": "*",
+	"accessWidener": "deipotentia.accesswidener",
 	"entrypoints": {
 		"main": [
 			"net.tywrapstudios.deipotentia.Deipotentia"
@@ -33,8 +34,7 @@
 		"minecraft": "~1.19.2",
 		"java": ">=17",
 		"fabric-api": "*",
-		"blossombridge": ">=1.1.1",
-		"cardinal-components": ">=5.0.2"
+		"blossombridge": ">=1.1.1"
 	},
 	"custom": {
 		"cardinal-components": [

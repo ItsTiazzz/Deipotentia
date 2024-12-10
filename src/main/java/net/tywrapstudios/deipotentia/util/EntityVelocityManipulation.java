@@ -7,9 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.registry.DTags;
 
 public class EntityVelocityManipulation {
@@ -82,26 +80,17 @@ public class EntityVelocityManipulation {
     public static final double REPULSION_STRENGTH = 0.5; // Strength of the push
 
     public static void initialize() {
-//        ServerTickEvents.END_WORLD_TICK.register(EntityVelocityManipulation::onWorldTick);
+        ServerTickEvents.END_WORLD_TICK.register(EntityVelocityManipulation::onWorldTick);
     }
 
-//    private static void onWorldTick(ServerWorld world) {
+    private static void onWorldTick(ServerWorld world) {
 //        for (PlayerEntity player : world.getPlayers()) {
-//            // Check if the player is holding the specific item
-//            if (isHoldingRepulsionItem(player)) {
-//                // Get all entities within the radius
-//                Box boundingBox = player.getBoundingBox().expand(REPULSION_RADIUS);
-//                for (Entity entity : world.getEntitiesByClass(Entity.class, boundingBox, e -> e != player)) {
-//                    // Push the entity away
-//                    pushEntityAwayFromPlayer(player, entity);
-//                }
-//                // Spawn particles around the player to indicate the range
-//                spawnRepulsionParticles(world, player, Deipotentia.CONFIG_MANAGER.getConfig().particle_density);
-//                // Freeze the player as compensation
-//                freezeEntityForRepulsingItem(player);
+//            if (player.hasNoGravity()) {
+//                player.setNoGravity(false);
+//                Deipotentia.LOGGING.debug("Player " + player.getName() + " has no gravity. Resetting for safety purposes.");
 //            }
 //        }
-//    }
+    }
 
     public static void spawnRepulsionParticles(ServerWorld world, PlayerEntity player, int density) {
         Vec3d center = player.getPos();
@@ -123,7 +112,7 @@ public class EntityVelocityManipulation {
     public static boolean isHoldingRepulsionItem(PlayerEntity player) {
         ItemStack mainHandStack = player.getMainHandStack();
         ItemStack offHandStack = player.getOffHandStack();
-        return (NBTUtilities.getEnabled(mainHandStack) || NBTUtilities.getEnabled(offHandStack)) && (mainHandStack.streamTags().anyMatch(itemTagKey -> itemTagKey.isOf(DTags.Items.REPULSING.get().registry())) || offHandStack.streamTags().anyMatch(itemTagKey -> itemTagKey.isOf(DTags.Items.REPULSING.get().registry())));
+        return (NbtUtilities.getEnabled(mainHandStack) || NbtUtilities.getEnabled(offHandStack)) && (mainHandStack.streamTags().anyMatch(itemTagKey -> itemTagKey.isOf(DTags.Items.REPULSING.get().registry())) || offHandStack.streamTags().anyMatch(itemTagKey -> itemTagKey.isOf(DTags.Items.REPULSING.get().registry())));
     }
 
     public static void pushEntityAwayFromPlayer(PlayerEntity player, Entity entity) {

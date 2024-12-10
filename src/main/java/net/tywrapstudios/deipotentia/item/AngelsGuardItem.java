@@ -16,7 +16,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.util.EntityVelocityManipulation;
-import net.tywrapstudios.deipotentia.util.NBTUtilities;
+import net.tywrapstudios.deipotentia.util.NbtUtilities;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -37,6 +37,7 @@ public class AngelsGuardItem extends Item {
                 for (Entity entity : world.getOtherEntities(player, boundingBox)) {
                     // Push the entity away
                     EntityVelocityManipulation.pushEntityAwayFromPlayer(player, entity);
+                    Deipotentia.LOGGING.debug("Found entity in radius: " + entity.getClass().getName());
                 }
                 // Spawn particles around the player to indicate the range
                 EntityVelocityManipulation.spawnRepulsionParticles(player.getWorld(), player, Deipotentia.CONFIG_MANAGER.getConfig().particle_density);
@@ -49,7 +50,7 @@ public class AngelsGuardItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack T = user.getStackInHand(hand);
-        boolean current = NBTUtilities.toggleEnabledForStack(T);
+        boolean current = NbtUtilities.toggleEnabledForStack(T);
         if (!current) {
             world.playSound(null, user.getX(), user.getY(), user.getZ(),
                     SoundEvents.BLOCK_BEACON_ACTIVATE,
@@ -68,7 +69,7 @@ public class AngelsGuardItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if (NBTUtilities.getEnabled(stack)) {
+        if (NbtUtilities.getEnabled(stack)) {
             tooltip.add(Text.translatable("misc.deipotentia.text.enabled").formatted(Formatting.DARK_GREEN));
         }
     }

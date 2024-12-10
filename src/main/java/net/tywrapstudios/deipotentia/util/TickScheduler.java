@@ -2,6 +2,9 @@ package net.tywrapstudios.deipotentia.util;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.MinecraftServer;
+import net.tywrapstudios.blossombridge.api.logging.LoggingHandler;
+import net.tywrapstudios.deipotentia.Deipotentia;
+import net.tywrapstudios.deipotentia.config.DeiConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +12,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TickScheduler {
     private static final List<ScheduledTask> tasks = new CopyOnWriteArrayList<>();
+    private static final LoggingHandler<DeiConfig> LOGGER = new LoggingHandler<>(TickScheduler.class.getName(), Deipotentia.CONFIG_MANAGER);
 
     public static void schedule(int delayTicks, Runnable action) {
         synchronized (tasks) {
             tasks.add(new ScheduledTask(delayTicks, action));
         }
+        LOGGER.debug("New task scheduled, tasks left: " + tasks.size());
     }
 
     public static void initialize() {
@@ -29,6 +34,7 @@ public class TickScheduler {
             if (task.ticksLeft <= 0) {
                 task.action.run();
                 toRemove.add(task); // Mark for removal
+                LOGGER.debug("Task ran and marked for removal: " + task);
             }
         }
 

@@ -30,11 +30,14 @@ public class Deipotentia implements ModInitializer {
 		DRecipes.register();
 		DItemGroup.register();
 		DEffects.register();
+		LOGGING.debug("Registered Content.");
 
 		SoulItem.Logic.initialize();
 		TickScheduler.initialize();
 		EntityVelocityManipulation.initialize();
+		LOGGING.debug("Initialized Utility Logic.");
 
 		LOGGING.info("May your woes have Deipotentia, and their wishes be granted.");
+		LOGGING.debugWarning("You enabled [Debug Mode] in the Config. Beware that this may occasionally spam your logs full of junk check results!");
 	}
 }

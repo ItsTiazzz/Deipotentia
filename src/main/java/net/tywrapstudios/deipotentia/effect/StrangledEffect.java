@@ -12,30 +12,14 @@ public class StrangledEffect extends StatusEffect {
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
-    }
-
-    @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        //freezeEntity(entity);
-    }
-
-    @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        //unfreezeEntity(entity);
-    }
-
-    private static void freezeEntity(LivingEntity entity) {
-        entity.setVelocity(0, 0, 0);
-        entity.setNoGravity(true);
-        entity.velocityDirty = true;
-        Deipotentia.LOGGING.debug("Froze entity: " + entity);
+        unfreezeEntity(entity);
     }
 
     private static void unfreezeEntity(LivingEntity entity) {
         entity.setNoGravity(false);
         entity.velocityDirty= false;
+        entity.velocityModified = false;
         Deipotentia.LOGGING.debug("Unfroze entity: " + entity);
     }
 }

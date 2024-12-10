@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
 import net.tywrapstudios.deipotentia.item.ValSoulStranglerItem;
-import net.tywrapstudios.deipotentia.util.NBTUtilities;
+import net.tywrapstudios.deipotentia.util.NbtUtilities;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,7 +26,7 @@ public abstract class LivingEntityMixin {
             if (entity instanceof ServerPlayerEntity player) {
                 for (int i = 0; i < player.getInventory().size(); i++) {
                     ItemStack itemStack2 = player.getInventory().getStack(i);
-                    if (itemStack2.isOf(DRegistry.DItems.VALSOULSTRANGLER) && NBTUtilities.getEnabled(itemStack2)) {
+                    if (itemStack2.isOf(DRegistry.DItems.VALSOULSTRANGLER) && NbtUtilities.getEnabled(itemStack2)) {
                         itemStack = itemStack2.copy();
                         itemStack2.damage(1, player, player1 -> player1.sendToolBreakStatus(player1.getActiveHand()));
                         break;
@@ -34,7 +34,7 @@ public abstract class LivingEntityMixin {
                 }
 
                 if (itemStack != null) {
-                    if (NBTUtilities.getEnabled(itemStack)) {
+                    if (NbtUtilities.getEnabled(itemStack)) {
                         ((ValSoulStranglerItem) itemStack.getItem()).deathLogic(player);
                         ((ValSoulStranglerItem) itemStack.getItem()).totemPopLogic(player);
                     }

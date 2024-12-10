@@ -31,10 +31,11 @@ public class SturdySickleItem extends HoeItem {
             World world = attacker.getWorld();
             double impactRadius = 6.0;
             double generalPushStrength = 2.0;
-            world.playSound(attacker.getX(), attacker.getY(), attacker.getZ(),
-                    SoundEvents.ENTITY_PHANTOM_SWOOP,
+            world.playSound(null,
+                    attacker.getX(), attacker.getY(), attacker.getZ(),
+                    SoundEvents.ITEM_FIRECHARGE_USE,
                     SoundCategory.NEUTRAL,
-                    1.0f, 1.0f, false);
+                    1.0f, 1.0f);
 
             for (LivingEntity entity : world.getEntitiesByClass(LivingEntity.class, attacker.getBoundingBox().expand(impactRadius), entity -> entity != attacker)) {
                 if (entity != attacker && entity.squaredDistanceTo(attacker) <= impactRadius * impactRadius) {

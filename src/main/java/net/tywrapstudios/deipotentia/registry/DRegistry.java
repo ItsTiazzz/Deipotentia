@@ -50,7 +50,8 @@ public class DRegistry {
                     .maxCount(1)));
             SOUL_BLEACHER = create("soul_bleacher", new SoulBleacherItem(new FabricItemSettings().group(DEI_GROUP)
                     .maxCount(1)));
-            EMPTY_SOUL = create("empty_soul", new Item(new FabricItemSettings().group(DEI_GROUP)));
+            EMPTY_SOUL = create("empty_soul", new Item(new FabricItemSettings().group(DEI_GROUP)
+                    .maxCount(16)));
         }
 
         private static Item create(String name, Item item) {

@@ -32,28 +32,44 @@ public class SoulItem extends Item {
         if (!world.isClient && selected && entity instanceof ServerPlayerEntity viewer) {
             if (stack.hasNbt()) {
                 NbtCompound nbt = stack.getNbt();
-                if (nbt != null && nbt.contains(NBT.UUID_KEY)) {
-                    UUID linkedPlayerId = nbt.getUuid(NBT.UUID_KEY);
+                if (nbt != null && nbt.contains(NBT.UUID)) {
+                    UUID linkedPlayerId = nbt.getUuid(NBT.UUID);
                     ServerPlayerEntity linkedPlayer = viewer.getServer().getPlayerManager().getPlayer(linkedPlayerId);
 
                     // Update NBT with linked player's current data if they're online
                     if (linkedPlayer != null) {
-                        nbt.putFloat(NBT.HEALTH_KEY, linkedPlayer.getHealth());
+                        nbt.putFloat(NBT.HEALTH, linkedPlayer.getHealth());
                         nbt.putString(NBT.POSITION, linkedPlayer.getPos().toString().replace("(", "").replace(")", ""));
                     }
 
                     // Display the data to the viewer
                     Text text = Text.empty()
                             .append("Vessel Name: ")
-                            .append(Text.literal(nbt.contains(NBT.NAME_KEY) ? nbt.getString(NBT.NAME_KEY) : "Could not fetch!")
+                            .append(Text.literal(nbt.contains(NBT.NAME) ? nbt.getString(NBT.NAME) : "Could not fetch!")
                                     .formatted(Formatting.GOLD))
                             .append(" | Health: ")
-                            .append(Text.literal(nbt.contains(NBT.HEALTH_KEY) ? String.format("%.1f", nbt.getFloat(NBT.HEALTH_KEY)) : "Could not fetch!")
-                                    .formatted(getColourFromHealth(nbt.getFloat(NBT.HEALTH_KEY))))
+                            .append(Text.literal(nbt.contains(NBT.HEALTH) ? String.format("%.1f", nbt.getFloat(NBT.HEALTH)) : "Could not fetch!")
+                                    .formatted(getColourFromHealth(nbt.getFloat(NBT.HEALTH))))
                             .append(" | Pos: ")
                             .append(getPosText(nbt.contains(NBT.POSITION) ? nbt.getString(NBT.POSITION) : "N/A"))
                             .append(Text.literal(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ?
-                                    " | IP: " + nbt.getString(NBT.IP_ADDRESS_KEY) : ""));
+                                    " | IP: " + nbt.getString(NBT.IP_ADDRESS) : ""));
+
+                    if (nbt.getBoolean(NBT.CLEANED)) {
+                        text = Text.empty()
+                                .append("Vessel Name: ")
+                                .append(Text.literal(nbt.contains(NBT.NAME) ? nbt.getString(NBT.NAME) : "Could not fetch!")
+                                        .formatted(Formatting.OBFUSCATED))
+                                .append(" | Health: ")
+                                .append(Text.literal(nbt.contains(NBT.HEALTH) ? String.format("%.1f", nbt.getFloat(NBT.HEALTH)) : "Could not fetch!")
+                                        .formatted(Formatting.OBFUSCATED))
+                                .append(" | Pos: ")
+                                .append(getPosText(nbt.contains(NBT.POSITION) ? nbt.getString(NBT.POSITION) : "N/A")
+                                        .copy().formatted(Formatting.OBFUSCATED))
+                                .append(Text.literal(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ?
+                                        " | IP: " + nbt.getString(NBT.IP_ADDRESS) : "")
+                                        .formatted(Formatting.OBFUSCATED));
+                    }
 
                     viewer.sendMessage(text, true);
                 }
@@ -97,11 +113,12 @@ public class SoulItem extends Item {
         ItemStack soulItem = new ItemStack(DRegistry.DItems.SOUL_ITEM); // Replace with your actual item
 
         NbtCompound nbt = soulItem.getOrCreateNbt();
-        nbt.putUuid(NBT.UUID_KEY, player.getUuid());
-        nbt.putFloat(NBT.HEALTH_KEY, player.getHealth());
-        nbt.putString(NBT.NAME_KEY, player.getName().getString());
+        nbt.putUuid(NBT.UUID, player.getUuid());
+        nbt.putFloat(NBT.HEALTH, player.getHealth());
+        nbt.putString(NBT.NAME, player.getName().getString());
         nbt.putString(NBT.POSITION, player.getPos().toString().replace("(", "").replace(")",""));
-        nbt.putString(NBT.IP_ADDRESS_KEY, generateFakeIp());
+        nbt.putString(NBT.IP_ADDRESS, generateFakeIp());
+        nbt.putBoolean(NBT.CLEANED, false);
 
         return soulItem;
     }
@@ -115,11 +132,12 @@ public class SoulItem extends Item {
     }
 
     public static class NBT {
-        private static final String UUID_KEY = "LinkedUUID";
-        private static final String NAME_KEY = "LinkedName";
-        private static final String HEALTH_KEY = "LinkedHealth";
-        private static final String IP_ADDRESS_KEY = "LinkedIP";
+        private static final String UUID = "LinkedUUID";
+        private static final String NAME = "LinkedName";
+        private static final String HEALTH = "LinkedHealth";
+        private static final String IP_ADDRESS = "LinkedIP";
         private static final String POSITION = "LinkedPosition";
+        protected static final String CLEANED = "IsClean";
     }
 
     public static class Logic {
@@ -133,6 +151,7 @@ public class SoulItem extends Item {
         }
 
         private static void handlePostMortem(ServerPlayerEntity player) {
+            player.setNoGravity(false);
             PlayerPostMortemComponent component = DeipotentiaComponents.PLAYER_DEATH_COMPONENT.get(player);
 
             Deipotentia.LOGGING.debug("HandlePostMortem - Player: " + player.getName().getString());
@@ -155,8 +174,10 @@ public class SoulItem extends Item {
                 for (ItemStack stack : list) {
                     if (stack.getItem() == DRegistry.DItems.SOUL_ITEM && stack.hasNbt()) {
                         NbtCompound nbt = stack.getNbt();
-                        if (nbt != null && nbt.contains(NBT.UUID_KEY) && nbt.getUuid(NBT.UUID_KEY).equals(player.getUuid())) {
-                            nbt.putFloat(NBT.HEALTH_KEY, currentHealth);
+                        if (nbt != null && nbt.contains(NBT.UUID) &&
+                                nbt.getUuid(NBT.UUID).equals(player.getUuid()) &&
+                                !nbt.getBoolean(NBT.CLEANED)) {
+                            nbt.putFloat(NBT.HEALTH, currentHealth);
                             nbt.putString(NBT.POSITION, currentPos);
                         }
                     }
@@ -165,3 +186,4 @@ public class SoulItem extends Item {
         }
     }
 }
+
