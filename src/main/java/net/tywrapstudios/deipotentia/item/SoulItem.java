@@ -3,12 +3,15 @@ package net.tywrapstudios.deipotentia.item;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.DeipotentiaComponents;
@@ -17,6 +20,7 @@ import net.tywrapstudios.deipotentia.registry.DRegistry;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class SoulItem extends Item {
     public SoulItem(Settings settings) {
@@ -25,26 +29,41 @@ public class SoulItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (!world.isClient && selected && entity instanceof ServerPlayerEntity serverPlayer) {
+        if (!world.isClient && selected && entity instanceof ServerPlayerEntity viewer) {
             if (stack.hasNbt()) {
                 NbtCompound nbt = stack.getNbt();
-                if (nbt != null) {
+                if (nbt != null && nbt.contains(NBT.UUID_KEY)) {
+                    UUID linkedPlayerId = nbt.getUuid(NBT.UUID_KEY);
+                    ServerPlayerEntity linkedPlayer = viewer.getServer().getPlayerManager().getPlayer(linkedPlayerId);
+
+                    // Update NBT with linked player's current data if they're online
+                    if (linkedPlayer != null) {
+                        nbt.putFloat(NBT.HEALTH_KEY, linkedPlayer.getHealth());
+                        nbt.putString(NBT.POSITION, linkedPlayer.getPos().toString().replace("(", "").replace(")", ""));
+                    }
+
+                    // Display the data to the viewer
                     Text text = Text.empty()
                             .append("Vessel Name: ")
-                            .append(nbt.contains(NBT.NAME_KEY) ? nbt.getString(NBT.NAME_KEY) : "Could not fetch!")
-                            .formatted(Formatting.GOLD)
+                            .append(Text.literal(nbt.contains(NBT.NAME_KEY) ? nbt.getString(NBT.NAME_KEY) : "Could not fetch!")
+                                    .formatted(Formatting.GOLD))
                             .append(" | Health: ")
-                            .append(nbt.contains(NBT.HEALTH_KEY) ? String.format("%.1f", nbt.getFloat(NBT.HEALTH_KEY)) : "Could not fetch!")
-                            .formatted(getColourFromHealth(nbt.getFloat(NBT.HEALTH_KEY)))
+                            .append(Text.literal(nbt.contains(NBT.HEALTH_KEY) ? String.format("%.1f", nbt.getFloat(NBT.HEALTH_KEY)) : "Could not fetch!")
+                                    .formatted(getColourFromHealth(nbt.getFloat(NBT.HEALTH_KEY))))
                             .append(" | Pos: ")
                             .append(getPosText(nbt.contains(NBT.POSITION) ? nbt.getString(NBT.POSITION) : "N/A"))
-                            .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ?
-                                    " | IP: " + nbt.getString(NBT.IP_ADDRESS_KEY) : "");
+                            .append(Text.literal(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ?
+                                    " | IP: " + nbt.getString(NBT.IP_ADDRESS_KEY) : ""));
 
-                    serverPlayer.sendMessage(text);
+                    viewer.sendMessage(text, true);
                 }
             }
         }
+    }
+
+    @Override
+    public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack) {
+        return false;
     }
 
     private static Text getPosText(String posString) {
@@ -53,12 +72,12 @@ public class SoulItem extends Item {
         } else {
             List<String> positions = List.of(posString.split(", "));
             return Text.empty()
-                    .append(String.format("%.1f", Float.valueOf(positions.get(0))))
-                    .formatted(Formatting.DARK_AQUA)
-                    .append(String.format("%.1f", Float.valueOf(positions.get(1))))
-                    .formatted(Formatting.DARK_PURPLE)
-                    .append(String.format("%.1f", Float.valueOf(positions.get(2))))
-                    .formatted(Formatting.DARK_AQUA);
+                    .append(Text.literal(String.format("%.0f, ", Float.valueOf(positions.get(0))))
+                            .formatted(Formatting.DARK_AQUA))
+                    .append(Text.literal(String.format("%.0f", Float.valueOf(positions.get(1))))
+                            .formatted(Formatting.DARK_PURPLE))
+                    .append(Text.literal(String.format(", %.0f", Float.valueOf(positions.get(2))))
+                            .formatted(Formatting.DARK_AQUA));
         }
     }
 
@@ -67,8 +86,10 @@ public class SoulItem extends Item {
             return Formatting.DARK_GREEN;
         } else if (health >= 6) {
             return Formatting.GOLD;
-        } else {
+        } else if (health > 0) {
             return Formatting.DARK_RED;
+        } else {
+            return Formatting.BLACK;
         }
     }
 
@@ -106,8 +127,7 @@ public class SoulItem extends Item {
             ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> handlePostMortem(newPlayer));
             ServerTickEvents.END_SERVER_TICK.register(server -> {
                 for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                    syncSoulItemHealth(player);
-                    syncSoulItemPos(player);
+                    syncSoulItem(player);
                 }
             });
         }
@@ -127,28 +147,21 @@ public class SoulItem extends Item {
             }
         }
 
-        private static void syncSoulItemHealth(ServerPlayerEntity player) {
-            for (ItemStack stack : player.getInventory().main) {
-                if (stack.getItem() == DRegistry.DItems.SOUL_ITEM && stack.hasNbt()) {
-                    NbtCompound nbt = stack.getNbt();
-                    if (nbt != null && nbt.contains(NBT.UUID_KEY) && nbt.getUuid(NBT.UUID_KEY).equals(player.getUuid())) {
-                        nbt.putFloat(NBT.HEALTH_KEY, player.getHealth());
-                    }
-                }
-            }
-        }
+        private static void syncSoulItem(ServerPlayerEntity player) {
+            float currentHealth = player.getHealth();
+            String currentPos = player.getPos().toString().replace("(", "").replace(")", "");
 
-        private static void syncSoulItemPos(ServerPlayerEntity player) {
-            for (ItemStack stack : player.getInventory().main) {
-                if (stack.getItem() == DRegistry.DItems.SOUL_ITEM && stack.hasNbt()) {
-                    NbtCompound nbt = stack.getNbt();
-                    if (nbt != null && nbt.contains(NBT.UUID_KEY) && nbt.getUuid(NBT.UUID_KEY).equals(player.getUuid())) {
-                        String posString = player.getPos().toString().replace("(", "").replace(")", "");
-                        nbt.putString(NBT.POSITION, posString);
+            for (DefaultedList<ItemStack> list : List.of(player.getInventory().main, player.getInventory().offHand)) {
+                for (ItemStack stack : list) {
+                    if (stack.getItem() == DRegistry.DItems.SOUL_ITEM && stack.hasNbt()) {
+                        NbtCompound nbt = stack.getNbt();
+                        if (nbt != null && nbt.contains(NBT.UUID_KEY) && nbt.getUuid(NBT.UUID_KEY).equals(player.getUuid())) {
+                            nbt.putFloat(NBT.HEALTH_KEY, currentHealth);
+                            nbt.putString(NBT.POSITION, currentPos);
+                        }
                     }
                 }
             }
         }
     }
 }
-
