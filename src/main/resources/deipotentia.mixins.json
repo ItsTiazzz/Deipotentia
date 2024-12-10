@@ -3,7 +3,8 @@
   "package": "net.tywrapstudios.deipotentia.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "ReloadCommandMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -9,6 +9,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.registry.DTags;
 
 public class EntityVelocityManipulation {
@@ -95,7 +96,7 @@ public class EntityVelocityManipulation {
                     pushEntityAwayFromPlayer(player, entity);
                 }
                 // Spawn particles around the player to indicate the range
-                spawnRepulsionParticles(world, player, 250);
+                spawnRepulsionParticles(world, player, Deipotentia.CONFIG_MANAGER.getConfig().particle_density);
                 // Freeze the player as compensation
                 freezeEntityForRepulsingItem(player);
             }

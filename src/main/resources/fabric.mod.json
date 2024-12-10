@@ -36,6 +36,11 @@
 		"blossombridge": ">=1.1.1",
 		"cardinal-components": ">=5.0.2"
 	},
+	"custom": {
+		"cardinal-components": [
+			"deipotentia:death_data"
+		]
+	},
 	"suggests": {
 	}
 }

@@ -22,6 +22,9 @@ public class ModelGen extends FabricModelProvider {
         simpleItem(DRegistry.DItems.VALSOULSTRANGLER_DEACTIVATED, generator);
         simpleItem(DRegistry.DItems.ANGELS_GUARD, generator);
         simpleItem(DRegistry.DItems.ANGELS_GUARD_DEACTIVATED, generator);
+        simpleItem(DRegistry.DItems.SOUL_ITEM, generator);
+        simpleItem(DRegistry.DItems.EMPTY_SOUL, generator);
+        simpleItem(DRegistry.DItems.SOUL_BLEACHER, generator);
     }
 
     private void simpleItem(Item item, ItemModelGenerator generator) {

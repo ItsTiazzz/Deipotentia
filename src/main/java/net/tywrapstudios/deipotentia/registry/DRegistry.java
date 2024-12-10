@@ -10,10 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.block.HephaestusForgeBlock;
-import net.tywrapstudios.deipotentia.item.AngelsGuardItem;
-import net.tywrapstudios.deipotentia.item.Deactivated;
-import net.tywrapstudios.deipotentia.item.SoulItem;
-import net.tywrapstudios.deipotentia.item.ValSoulStranglerItem;
+import net.tywrapstudios.deipotentia.item.*;
 import net.tywrapstudios.deipotentia.item.sickles.CrimsonSickleItem;
 import net.tywrapstudios.deipotentia.item.sickles.NymphSickleItem;
 import net.tywrapstudios.deipotentia.item.sickles.SturdySickleItem;
@@ -32,6 +29,8 @@ public class DRegistry {
         public static final Item ANGELS_GUARD;
         public static final Item ANGELS_GUARD_DEACTIVATED;
         public static final Item SOUL_ITEM;
+        public static final Item SOUL_BLEACHER;
+        public static final Item EMPTY_SOUL;
 
         static {
             VALSOULSTRANGLER = create("valsoulstrangler", new ValSoulStranglerItem(new FabricItemSettings().group(DEI_GROUP)
@@ -49,6 +48,9 @@ public class DRegistry {
                     .maxCount(1)));
             SOUL_ITEM = create("soul_item", new SoulItem(new FabricItemSettings().group(DEI_GROUP)
                     .maxCount(1)));
+            SOUL_BLEACHER = create("soul_bleacher", new SoulBleacherItem(new FabricItemSettings().group(DEI_GROUP)
+                    .maxCount(1)));
+            EMPTY_SOUL = create("empty_soul", new Item(new FabricItemSettings().group(DEI_GROUP)));
         }
 
         private static Item create(String name, Item item) {

@@ -20,9 +20,6 @@ public class HephaestusForgeBlock extends BlockWithEntity implements BlockEntity
         super(settings);
     }
 
-
-    /* BLOCK ENTITY */
-
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;

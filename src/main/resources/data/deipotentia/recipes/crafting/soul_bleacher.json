@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:water_bucket"
+    },
+    "$": {
+      "item": "minecraft:iron_ingot"
+    },
+    "&": {
+      "item": "deipotentia:empty_soul"
+    }
+  },
+  "pattern": [
+    "$#$",
+    " & "
+  ],
+  "result": {
+    "item": "deipotentia:soul_bleacher"
+  }
+}
