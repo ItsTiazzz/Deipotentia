@@ -1,6 +1,5 @@
 package net.tywrapstudios.deipotentia.item.sickles;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.client.item.TooltipContext;
@@ -11,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -43,7 +41,7 @@ public class NymphSickleItem extends HoeItem {
         if (!context.getWorld().isClient()) {
             boolean foundBlock = false;
             if (isAcceptAbleBlock(state)) {
-                breakCircle(world, pos, 2, user);
+                breakCircle(world, pos, user);
                 assert user != null;
                 context.getStack().damage(1, user, playerEntity -> playerEntity.sendToolBreakStatus(hand));
                 foundBlock = true;
@@ -59,10 +57,10 @@ public class NymphSickleItem extends HoeItem {
         return state.isIn(BlockTags.CROPS) && ((CropBlock) state.getBlock()).isMature(state);
     }
 
-    private static void breakCircle(World world, BlockPos center, int radius, Entity entity) {
-        for (int x = -radius; x <= radius; x++) {
-            for (int z = -radius; z <= radius; z++) {
-                if (Math.sqrt(x * x + z * z) <= radius) {
+    private static void breakCircle(World world, BlockPos center, Entity entity) {
+        for (int x = -2; x <= 2; x++) {
+            for (int z = -2; z <= 2; z++) {
+                if (Math.sqrt(x * x + z * z) <= 2) {
                     BlockPos pos = center.add(x, 0, z);
                     if (isAcceptAbleBlock(world.getBlockState(pos))) {
                         world.breakBlock(pos, true, entity);
