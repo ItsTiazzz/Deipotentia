@@ -17,6 +17,7 @@ import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.DeipotentiaComponents;
 import net.tywrapstudios.deipotentia.component.PlayerPostMortemComponent;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
+import net.tywrapstudios.deipotentia.util.TickScheduler;
 
 import java.util.List;
 import java.util.Random;
@@ -33,16 +34,14 @@ public class SoulItem extends Item {
             if (stack.hasNbt()) {
                 NbtCompound nbt = stack.getNbt();
                 if (nbt != null && nbt.contains(NBT.UUID)) {
-                    UUID linkedPlayerId = nbt.getUuid(NBT.UUID);
-                    ServerPlayerEntity linkedPlayer = viewer.getServer().getPlayerManager().getPlayer(linkedPlayerId);
+                    UUID linkedPlayerUuid = nbt.getUuid(NBT.UUID);
+                    ServerPlayerEntity linkedPlayer = viewer.getServer().getPlayerManager().getPlayer(linkedPlayerUuid);
 
-                    // Update NBT with linked player's current data if they're online
                     if (linkedPlayer != null) {
                         nbt.putFloat(NBT.HEALTH, linkedPlayer.getHealth());
                         nbt.putString(NBT.POSITION, linkedPlayer.getPos().toString().replace("(", "").replace(")", ""));
                     }
 
-                    // Display the data to the viewer
                     Text text = Text.empty()
                             .append("Vessel Name: ")
                             .append(Text.literal(nbt.contains(NBT.NAME) ? nbt.getString(NBT.NAME) : "Could not fetch!")
@@ -151,18 +150,18 @@ public class SoulItem extends Item {
         }
 
         private static void handlePostMortem(ServerPlayerEntity player) {
-            player.setNoGravity(false);
+            TickScheduler.schedule(10, () -> player.setNoGravity(false));
             PlayerPostMortemComponent component = DeipotentiaComponents.PLAYER_DEATH_COMPONENT.get(player);
 
             Deipotentia.LOGGING.debug("HandlePostMortem - Player: " + player.getName().getString());
             Deipotentia.LOGGING.debug("IsClient: " + player.getWorld().isClient());
-            Deipotentia.LOGGING.debug("HasDiedBefore: " + component.isHasDiedBefore());
+            Deipotentia.LOGGING.debug("HasDiedBefore: " + component.hasDiedBefore());
 
-            if (!player.getWorld().isClient() && !component.isHasDiedBefore()) {
+            if (!player.getWorld().isClient() && !component.hasDiedBefore()) {
                 ItemStack soulItem = SoulItem.createSoulItemStack(player);
                 player.giveItemStack(soulItem);
                 component.setHasDiedBefore(true, player);
-                Deipotentia.LOGGING.debug("First death detected - giving soul item to " + player.getName().getString());
+                Deipotentia.LOGGING.debug("Valid death detected - giving soul item to " + player.getName().getString());
             }
         }
 

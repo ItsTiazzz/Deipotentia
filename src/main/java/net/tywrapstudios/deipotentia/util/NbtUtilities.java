@@ -1,6 +1,7 @@
 package net.tywrapstudios.deipotentia.util;
 
 import com.mojang.authlib.GameProfile;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -9,8 +10,11 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.world.World;
 import net.tywrapstudios.blossombridge.api.logging.LoggingHandler;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.config.DeiConfig;
@@ -55,6 +59,22 @@ public class NbtUtilities {
     public static boolean toggleEnabledForStack(ItemStack itemStack) {
         boolean current = getEnabled(itemStack);
         setEnabled(itemStack, !current);
+        return current;
+    }
+
+    public static boolean toggleEnabledForStack(ItemStack itemStack, World world, PlayerEntity user) {
+        boolean current = toggleEnabledForStack(itemStack);
+        if (!current) {
+            world.playSound(null, user.getX(), user.getY(), user.getZ(),
+                    SoundEvents.BLOCK_BEACON_ACTIVATE,
+                    SoundCategory.NEUTRAL,
+                    1.0f, 2.0f);
+        } else {
+            world.playSound(null, user.getX(), user.getY(), user.getZ(),
+                    SoundEvents.BLOCK_BEACON_DEACTIVATE,
+                    SoundCategory.NEUTRAL,
+                    1.0f, 2.0f);
+        }
         return current;
     }
 

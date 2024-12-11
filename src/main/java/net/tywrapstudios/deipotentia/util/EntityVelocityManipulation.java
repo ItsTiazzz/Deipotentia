@@ -1,6 +1,5 @@
 package net.tywrapstudios.deipotentia.util;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -78,19 +77,6 @@ public class EntityVelocityManipulation {
 
     public static final double REPULSION_RADIUS = 5.0; // Radius in blocks
     public static final double REPULSION_STRENGTH = 0.5; // Strength of the push
-
-    public static void initialize() {
-        ServerTickEvents.END_WORLD_TICK.register(EntityVelocityManipulation::onWorldTick);
-    }
-
-    private static void onWorldTick(ServerWorld world) {
-//        for (PlayerEntity player : world.getPlayers()) {
-//            if (player.hasNoGravity()) {
-//                player.setNoGravity(false);
-//                Deipotentia.LOGGING.debug("Player " + player.getName() + " has no gravity. Resetting for safety purposes.");
-//            }
-//        }
-    }
 
     public static void spawnRepulsionParticles(ServerWorld world, PlayerEntity player, int density) {
         Vec3d center = player.getPos();

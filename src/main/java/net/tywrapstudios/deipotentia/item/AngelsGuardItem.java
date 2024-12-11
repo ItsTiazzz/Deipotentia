@@ -6,8 +6,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -30,18 +28,14 @@ public class AngelsGuardItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity user, int slot, boolean selected) {
-        if (user instanceof ServerPlayerEntity player) {
+        if (selected && user instanceof ServerPlayerEntity player) {
             if (EntityVelocityManipulation.isHoldingRepulsionItem(player)) {
-                // Get all entities within the radius
                 Box boundingBox = user.getBoundingBox().expand(REPULSION_RADIUS);
-                for (Entity entity : world.getOtherEntities(player, boundingBox)) {
-                    // Push the entity away
+                for (Entity entity : world.getNonSpectatingEntities(Entity.class, boundingBox)) {
                     EntityVelocityManipulation.pushEntityAwayFromPlayer(player, entity);
-                    Deipotentia.LOGGING.debug("Found entity in radius: " + entity.getClass().getName());
+                    Deipotentia.LOGGING.debug("Found entity in radius of class: " + entity.getClass().getName());
                 }
-                // Spawn particles around the player to indicate the range
                 EntityVelocityManipulation.spawnRepulsionParticles(player.getServerWorld(), player, Deipotentia.CONFIG_MANAGER.getConfig().particle_density);
-                // Freeze the player as compensation
                 EntityVelocityManipulation.freezeEntityForRepulsingItem(player);
             }
         }
@@ -50,18 +44,7 @@ public class AngelsGuardItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack T = user.getStackInHand(hand);
-        boolean current = NbtUtilities.toggleEnabledForStack(T);
-        if (!current) {
-            world.playSound(null, user.getX(), user.getY(), user.getZ(),
-                    SoundEvents.BLOCK_BEACON_ACTIVATE,
-                    SoundCategory.NEUTRAL,
-                    1.0f, 2.0f);
-        } else {
-            world.playSound(null, user.getX(), user.getY(), user.getZ(),
-                    SoundEvents.BLOCK_BEACON_DEACTIVATE,
-                    SoundCategory.NEUTRAL,
-                    1.0f, 2.0f);
-        }
+        NbtUtilities.toggleEnabledForStack(T, world, user);
         user.setNoGravity(false);
 
         return TypedActionResult.success(T, world.isClient());

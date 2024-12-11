@@ -41,6 +41,11 @@ public class Deactivated {
                 return TypedActionResult.pass(user.getStackInHand(hand));
             }
         }
+
+        @Override
+        public Text getName() {
+            return getDeactivatedText(this.getTranslationKey());
+        }
     }
 
     public static class AngelsGuard extends Item {
@@ -52,6 +57,11 @@ public class Deactivated {
         public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
             String val = Deipotentia.CONFIG_MANAGER.getConfig().stenUuid;
             return getActivationResult(world, user, hand, val, DRegistry.DItems.ANGELS_GUARD);
+        }
+
+        @Override
+        public Text getName() {
+            return getDeactivatedText(this.getTranslationKey());
         }
     }
 
@@ -72,5 +82,9 @@ public class Deactivated {
             user.sendMessage(Text.translatable("misc.deipotentia.text.invalid_uuid_" + world.random.nextBetween(0, 3)).formatted(Formatting.DARK_GRAY));
             return TypedActionResult.pass(user.getStackInHand(hand));
         }
+    }
+
+    private static Text getDeactivatedText(String translatable) {
+        return Text.translatable(translatable).formatted(Formatting.DARK_GRAY);
     }
 }

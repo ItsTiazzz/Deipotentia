@@ -49,17 +49,11 @@ public class SoulBoundEnchantment extends Enchantment {
         private static final HashMap<UUID, List<ItemStack>> SOULBOUND_ITEMS = new HashMap<>();
 
         public static void initialize() {
-            ServerPlayerEvents.ALLOW_DEATH.register((player, damageSource, damageAmount) -> {
-                collect(player);
-                return true;
-            });
-
-            ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
-                restore(newPlayer);
-            });
+            ServerPlayerEvents.ALLOW_DEATH.register((player, damageSource, damageAmount) -> collect(player));
+            ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> restore(newPlayer));
         }
 
-        private static void collect(PlayerEntity player) {
+        private static boolean collect(PlayerEntity player) {
             List<ItemStack> soulboundItems = new ArrayList<>();
             PlayerInventory inventory = player.getInventory();
 
@@ -86,6 +80,7 @@ public class SoulBoundEnchantment extends Enchantment {
             }
 
             SOULBOUND_ITEMS.put(player.getUuid(), soulboundItems);
+            return true;
         }
 
         private static void restore(PlayerEntity player) {

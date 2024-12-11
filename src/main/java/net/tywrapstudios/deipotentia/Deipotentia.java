@@ -36,8 +36,7 @@ public class Deipotentia implements ModInitializer {
 		SoulItem.Logic.initialize();
 		SoulBoundEnchantment.Logic.initialize();
 		TickScheduler.initialize();
-		EntityVelocityManipulation.initialize();
-		LOGGING.debug("Initialized Utility Logic.");
+		LOGGING.debug("Initialized Logic.");
 
 		LOGGING.info("May your woes have Deipotentia, and their wishes be granted.");
 		LOGGING.debugWarning("You enabled [Debug Mode] in the Config. Beware that this may occasionally spam your logs full of junk check results!");

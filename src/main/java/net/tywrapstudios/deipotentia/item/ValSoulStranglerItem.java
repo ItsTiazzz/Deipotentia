@@ -33,18 +33,7 @@ public class ValSoulStranglerItem extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack T = user.getStackInHand(hand);
         if (user.isSneaking()) {
-            boolean current = NbtUtilities.toggleEnabledForStack(T);
-            if (!current) {
-                world.playSound(null, user.getX(), user.getY(), user.getZ(),
-                        SoundEvents.BLOCK_BEACON_ACTIVATE,
-                        SoundCategory.NEUTRAL,
-                        1.0f, 2.0f);
-            } else {
-                world.playSound(null, user.getX(), user.getY(), user.getZ(),
-                        SoundEvents.BLOCK_BEACON_DEACTIVATE,
-                        SoundCategory.NEUTRAL,
-                        1.0f, 2.0f);
-            }
+            NbtUtilities.toggleEnabledForStack(T, world, user);
         } else {
             user.getItemCooldownManager().set(T.getItem(), 14*20);
             EntityVelocityManipulation.launchEntity(user, 7, 6);

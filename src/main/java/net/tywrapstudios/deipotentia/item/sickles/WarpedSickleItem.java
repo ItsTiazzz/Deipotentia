@@ -24,6 +24,11 @@ public class WarpedSickleItem extends HoeItem {
     }
 
     @Override
+    public Text getName() {
+        return Text.translatable(this.getTranslationKey()).formatted(Formatting.DARK_RED);
+    }
+
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack H = user.getStackInHand(hand);
         world.playSound(

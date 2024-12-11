@@ -23,6 +23,11 @@ public class SturdySickleItem extends HoeItem {
     }
 
     @Override
+    public Text getName() {
+        return Text.translatable(this.getTranslationKey()).formatted(Formatting.DARK_RED);
+    }
+
+    @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         int chanceToPush = target.getRandom().nextBetween(0, 5);
         if (target.getBlockStateAtPos().isIn(DTags.Blocks.NON_STURDY.get()) && chanceToPush != 0) {

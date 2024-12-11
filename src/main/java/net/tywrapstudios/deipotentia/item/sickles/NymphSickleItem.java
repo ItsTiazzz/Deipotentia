@@ -29,6 +29,11 @@ public class NymphSickleItem extends HoeItem {
     }
 
     @Override
+    public Text getName() {
+        return Text.translatable(this.getTranslationKey()).formatted(Formatting.DARK_RED);
+    }
+
+    @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();

@@ -11,14 +11,10 @@ public class PlayerPostMortemComponent implements ComponentV3, AutoSyncedCompone
     private static final String NBT_KEY = "HasDied";
     private boolean hasDiedBefore = false;
 
-    public PlayerPostMortemComponent(PlayerPostMortemComponent other) {
-        this.hasDiedBefore = other.hasDiedBefore;
-    }
-
     public PlayerPostMortemComponent() {
     }
 
-    public boolean isHasDiedBefore() {
+    public boolean hasDiedBefore() {
         return hasDiedBefore;
     }
 
