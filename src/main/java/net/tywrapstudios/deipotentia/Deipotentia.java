@@ -10,7 +10,6 @@ import net.tywrapstudios.deipotentia.enchantment.SoulBoundEnchantment;
 import net.tywrapstudios.deipotentia.registry.*;
 import net.tywrapstudios.deipotentia.registry.DEffects;
 import net.tywrapstudios.deipotentia.item.SoulItem;
-import net.tywrapstudios.deipotentia.util.EntityVelocityManipulation;
 import net.tywrapstudios.deipotentia.util.TickScheduler;
 
 import java.io.File;

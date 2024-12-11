@@ -43,7 +43,7 @@ public class NymphSickleItem extends HoeItem {
         if (!context.getWorld().isClient()) {
             boolean foundBlock = false;
             if (isAcceptAbleBlock(state)) {
-                breakCircle(world, pos, 2, BlockTags.CROPS, user);
+                breakCircle(world, pos, 2, user);
                 assert user != null;
                 context.getStack().damage(1, user, playerEntity -> playerEntity.sendToolBreakStatus(hand));
                 foundBlock = true;
@@ -59,7 +59,7 @@ public class NymphSickleItem extends HoeItem {
         return state.isIn(BlockTags.CROPS) && ((CropBlock) state.getBlock()).isMature(state);
     }
 
-    public static void breakCircle(World world, BlockPos center, int radius, TagKey<Block> blockTagKey, Entity entity) {
+    private static void breakCircle(World world, BlockPos center, int radius, Entity entity) {
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
                 if (Math.sqrt(x * x + z * z) <= radius) {

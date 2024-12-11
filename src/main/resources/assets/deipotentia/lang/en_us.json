@@ -1,4 +1,5 @@
 {
+  "itemgroup.deipotentia": "Deipotentia",
   "item.deipotentia.warped_sickle": "Warped Sickle",
   "item.deipotentia.crimson_sickle": "Crimson Sickle",
   "item.deipotentia.sturdy_sickle": "Sturdy Sickle",
@@ -10,6 +11,8 @@
   "item.deipotentia.angels_guard_deactivated": "Deactivated Relic",
   "item.deipotentia.soul_bleacher": "Soul Bleacher",
   "item.minecraft.cooked_porkchop": "Pooked Corkchop",
+
+  "container.deipotentia.hephaestus_forge": "Hephaestus Forge",
 
   "misc.deipotentia.text.invalid_uuid_0": "Pffft, you don't have it in you.",
   "misc.deipotentia.text.invalid_uuid_1": "Did you really think you're worthy?",
@@ -28,6 +31,5 @@
 
   "enchantment.deipotentia.soulbound": "Soulbound",
   "enchantment.deipotentia.soulbound.desc": "Keeps items in your inventory post death.",
-  "": "",
-  "container.deipotentia.hephaestus_forge": "Hephaestus Forge"
+  "": ""
 }

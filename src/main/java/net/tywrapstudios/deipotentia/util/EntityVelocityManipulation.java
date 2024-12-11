@@ -36,7 +36,7 @@ public class EntityVelocityManipulation {
     }
 
     public static void freezeAndDropEntity(LivingEntity entity, int freezeDurationTicks) {
-        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos())) {
+        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos().getX(), entity.getBlockPos().getZ())) {
             return;
         }
 
@@ -48,14 +48,14 @@ public class EntityVelocityManipulation {
 
         // Schedule re-enabling gravity
         TickScheduler.schedule(freezeDurationTicks, () -> {
-            if (entity.isAlive() && entity.getWorld().isChunkLoaded(entity.getBlockPos())) {
+            if (entity.isAlive() && entity.getWorld().isChunkLoaded(entity.getBlockPos().getX(), entity.getBlockPos().getZ())) {
                 entity.setNoGravity(false);
             }
         });
     }
 
     public static void freezeEntityForRepulsingItem(LivingEntity entity) {
-        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos())) {
+        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos().getX(), entity.getBlockPos().getZ())) {
             return;
         }
 
@@ -69,7 +69,7 @@ public class EntityVelocityManipulation {
 
         // Schedule re-enabling gravity
         TickScheduler.schedule(20, () -> {
-            if (entity.isAlive() && entity.getWorld().isChunkLoaded(entity.getBlockPos())) {
+            if (entity.isAlive() && entity.getWorld().isChunkLoaded(entity.getBlockPos().getX(), entity.getBlockPos().getZ())) {
                 entity.setNoGravity(false);
             }
         });

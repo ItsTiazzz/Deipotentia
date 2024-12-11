@@ -14,7 +14,7 @@ public class DItemGroup {
     static {
         DEI_GROUP = Registry.register(Registries.ITEM_GROUP,
                 new Identifier(Deipotentia.MOD_ID, "deipotentia"), FabricItemGroup.builder()
-                        .displayName(Text.translatable("itemgroup.agriculture.main"))
+                        .displayName(Text.translatable("itemgroup.deipotentia"))
                         .icon(() -> new ItemStack(DRegistry.DItems.VALSOULSTRANGLER))
                         .entries((displayContext, entries) -> {
                             for (ItemConvertible item : DRegistry.ITEM_CONVERTIBLES) {
