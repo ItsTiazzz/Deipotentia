@@ -118,7 +118,7 @@ public class HephaestusForgeBlockEntity extends BlockEntity implements NamedScre
         if(hasRecipe(entity)) {
             entity.removeStack(0, 1);
 
-            entity.setStack(1, new ItemStack(recipe.get().getOutput().getItem(),
+            entity.setStack(1, new ItemStack(recipe.get().getOutput(null).getItem(),
                     entity.getStack(1).getCount() + 1));
 
             entity.resetProgress();
@@ -135,7 +135,7 @@ public class HephaestusForgeBlockEntity extends BlockEntity implements NamedScre
                 .getFirstMatch(HephaestusForgeRecipe.Type.INSTANCE, inventory, entity.getWorld());
 
         return match.isPresent() && canInsertAmountIntoOutputSlot(inventory)
-                && canInsertItemIntoOutputSlot(inventory, match.get().getOutput().getItem());
+                && canInsertItemIntoOutputSlot(inventory, match.get().getOutput(null).getItem());
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleInventory inventory, Item output) {

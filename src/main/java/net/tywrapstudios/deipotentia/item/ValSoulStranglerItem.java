@@ -64,7 +64,7 @@ public class ValSoulStranglerItem extends Item {
             player.setHealth(3.0f);
             player.clearStatusEffects();
 
-            player.world.sendEntityStatus(player, (byte) 100); // 100 -> Custom Totem Byte
+            player.getWorld().sendEntityStatus(player, (byte) 100); // 100 -> Custom Totem Byte
 
             player.extinguish();
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 3*20));

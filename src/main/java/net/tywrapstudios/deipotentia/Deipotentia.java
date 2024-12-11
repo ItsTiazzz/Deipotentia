@@ -6,6 +6,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.tywrapstudios.blossombridge.api.config.ConfigManager;
 import net.tywrapstudios.blossombridge.api.logging.LoggingHandler;
 import net.tywrapstudios.deipotentia.config.DeiConfig;
+import net.tywrapstudios.deipotentia.enchantment.SoulBoundEnchantment;
 import net.tywrapstudios.deipotentia.registry.*;
 import net.tywrapstudios.deipotentia.registry.DEffects;
 import net.tywrapstudios.deipotentia.item.SoulItem;
@@ -23,16 +24,17 @@ public class Deipotentia implements ModInitializer {
 	public void onInitialize() {
 		CONFIG_MANAGER.loadConfig();
 
-		DRegistry.DItems.register();
-		DRegistry.DBlocks.register();
+		DRegistry.registerAll();
 		DBlockEntities.register();
 		DScreenHandlers.register();
 		DRecipes.register();
 		DItemGroup.register();
 		DEffects.register();
+		DEnchantments.register();
 		LOGGING.debug("Registered Content.");
 
 		SoulItem.Logic.initialize();
+		SoulBoundEnchantment.Logic.initialize();
 		TickScheduler.initialize();
 		EntityVelocityManipulation.initialize();
 		LOGGING.debug("Initialized Utility Logic.");

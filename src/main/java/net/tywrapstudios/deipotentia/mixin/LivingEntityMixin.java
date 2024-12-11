@@ -3,6 +3,7 @@ package net.tywrapstudios.deipotentia.mixin;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
 import net.tywrapstudios.deipotentia.item.ValSoulStranglerItem;
@@ -18,7 +19,7 @@ public abstract class LivingEntityMixin {
             at = @At("HEAD"),
             cancellable = true)
     private void dei$tryUseValsoulstrangler(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
-        if (source.isOutOfWorld()) {
+        if (source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             cir.setReturnValue(false);
         } else {
             ItemStack itemStack = null;

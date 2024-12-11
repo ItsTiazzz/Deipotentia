@@ -59,16 +59,16 @@ public class SoulItem extends Item {
                         text = Text.empty()
                                 .append("Vessel Name: ")
                                 .append(Text.literal(nbt.contains(NBT.NAME) ? nbt.getString(NBT.NAME) : "Could not fetch!")
-                                        .formatted(Formatting.OBFUSCATED))
+                                        .formatted(Formatting.OBFUSCATED, Formatting.GOLD))
                                 .append(" | Health: ")
-                                .append(Text.literal(nbt.contains(NBT.HEALTH) ? String.format("%.1f", nbt.getFloat(NBT.HEALTH)) : "Could not fetch!")
-                                        .formatted(Formatting.OBFUSCATED))
+                                .append(Text.literal("20.0")
+                                        .formatted(Formatting.OBFUSCATED, Formatting.DARK_GREEN))
                                 .append(" | Pos: ")
-                                .append(getPosText(nbt.contains(NBT.POSITION) ? nbt.getString(NBT.POSITION) : "N/A")
-                                        .copy().formatted(Formatting.OBFUSCATED))
-                                .append(Text.literal(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ?
-                                        " | IP: " + nbt.getString(NBT.IP_ADDRESS) : "")
-                                        .formatted(Formatting.OBFUSCATED));
+                                .append(Text.literal("12, 85, 20")
+                                        .formatted(Formatting.OBFUSCATED, Formatting.DARK_AQUA))
+                                .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ? " | IP: " : "")
+                                .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ? Text.literal(nbt.getString(NBT.IP_ADDRESS))
+                                        .formatted(Formatting.OBFUSCATED) : Text.literal(""));
                     }
 
                     viewer.sendMessage(text, true);
@@ -91,7 +91,7 @@ public class SoulItem extends Item {
                     .append(Text.literal(String.format("%.0f, ", Float.valueOf(positions.get(0))))
                             .formatted(Formatting.DARK_AQUA))
                     .append(Text.literal(String.format("%.0f", Float.valueOf(positions.get(1))))
-                            .formatted(Formatting.DARK_PURPLE))
+                            .formatted(Formatting.DARK_AQUA))
                     .append(Text.literal(String.format(", %.0f", Float.valueOf(positions.get(2))))
                             .formatted(Formatting.DARK_AQUA));
         }

@@ -24,5 +24,9 @@
   "tooltip.deipotentia.sickle.sturdy_sickle.sec": "Replenishes 50% of missing health on right click.",
   "tooltip.deipotentia.sickle.nymph_sickle": "A tool crafted by forest Nymphs helping you in all your farming needs.",
   "tooltip.deipotentia.sickle.nymph_sickle.sec": "Breaks other nearby crops when right clicking one.",
-  "": ""
+
+  "enchantment.deipotentia.soulbound": "Soulbound",
+  "enchantment.deipotentia.soulbound.desc": "Keeps items in your inventory post death.",
+  "": "",
+  "container.deipotentia.hephaestus_forge": "Hephaestus Forge"
 }
