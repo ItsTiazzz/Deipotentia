@@ -66,8 +66,7 @@ public class SoulItem extends Item {
                                 .append(Text.literal("12, 85, 20")
                                         .formatted(Formatting.OBFUSCATED, Formatting.DARK_AQUA))
                                 .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ? " | IP: " : "")
-                                .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ? Text.literal(nbt.getString(NBT.IP_ADDRESS))
-                                        .formatted(Formatting.OBFUSCATED) : Text.literal(""));
+                                .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ? Text.literal("Blocked by CharterVPN") : Text.literal(""));
                     }
 
                     viewer.sendMessage(text, true);
@@ -160,6 +159,17 @@ public class SoulItem extends Item {
             if (!player.getWorld().isClient() && !component.hasDiedBefore()) {
                 ItemStack soulItem = SoulItem.createSoulItemStack(player);
                 player.giveItemStack(soulItem);
+                player.sendMessage(Text.literal(String.format("""
+                        Hey, %s, it seems this is the first time you've died.
+                        You just received a Soul Manifestation Item,
+                        it displays some statistics of whoever it's linked to.
+                        This is updated in real time, so make sure not to lose it
+                        if you value your privacy!
+                        
+                        Lost your manifestation anyways? Just bleach your soul using
+                        Soul Bleacher and it will obfuscate the text for anyone to read.
+                        This will also give you the ability to die again and get a new item.""", player.getName().getString()))
+                        .formatted(Formatting.GRAY));
                 component.setHasDiedBefore(true, player);
                 Deipotentia.LOGGING.debug("Valid death detected - giving soul item to " + player.getName().getString());
             }

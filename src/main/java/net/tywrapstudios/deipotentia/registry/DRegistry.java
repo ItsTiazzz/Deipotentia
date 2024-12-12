@@ -40,6 +40,7 @@ public class DRegistry {
         public static final Item SOUL_ITEM;
         public static final Item SOUL_BLEACHER;
         public static final Item EMPTY_SOUL;
+        public static final Item STURDY_TEMPLATE;
 
         static {
             VALSOULSTRANGLER = create("valsoulstrangler", new ValSoulStranglerItem(new FabricItemSettings()
@@ -61,6 +62,7 @@ public class DRegistry {
                     .maxCount(1)));
             EMPTY_SOUL = create("empty_soul", new Item(new FabricItemSettings()
                     .maxCount(16)));
+            STURDY_TEMPLATE = create("sturdy_template", new Item(new FabricItemSettings()));
         }
 
         private static Item create(String name, Item item) {

@@ -13,24 +13,19 @@ public class EntityVelocityManipulation {
     public static final double GRAVITY = 0.08; // Minecraft gravity
 
     public static void launchEntity(Entity entity, double forwardDistance, double upwardHeight) {
-        // Calculate vertical velocity for the desired height
         double verticalVelocity = Math.sqrt(2 * GRAVITY * upwardHeight);
 
-        // Calculate horizontal velocity for the desired distance
         double timeInAir = (2 * verticalVelocity) / GRAVITY; // Total air time
         double horizontalVelocity = forwardDistance / timeInAir;
 
-        // Get the player's look direction
         Vec3d lookDirection = entity.getRotationVec(1.0F).normalize();
 
-        // Apply the calculated velocities to the look direction
         Vec3d launchVelocity = new Vec3d(
                 lookDirection.x * horizontalVelocity,
                 verticalVelocity,
                 lookDirection.z * horizontalVelocity
         );
 
-        // Set the player's velocity
         entity.setVelocity(launchVelocity);
         entity.velocityDirty = true;
     }
@@ -40,13 +35,11 @@ public class EntityVelocityManipulation {
             return;
         }
 
-        // Disable motion and gravity
         entity.setVelocity(0, 0, 0);
         entity.velocityDirty = true;
         entity.velocityModified = true;
         entity.setNoGravity(true);
 
-        // Schedule re-enabling gravity
         TickScheduler.schedule(freezeDurationTicks, () -> {
             if (entity.isAlive() && entity.getWorld().isChunkLoaded(entity.getBlockPos().getX(), entity.getBlockPos().getZ())) {
                 entity.setNoGravity(false);
@@ -59,7 +52,6 @@ public class EntityVelocityManipulation {
             return;
         }
 
-        // Disable motion and gravity
         entity.setVelocity(0, 0, 0);
         entity.setMovementSpeed(-1);
         entity.velocityDirty = true;
@@ -67,7 +59,6 @@ public class EntityVelocityManipulation {
         entity.fallDistance = 0;
         entity.setNoGravity(true);
 
-        // Schedule re-enabling gravity
         TickScheduler.schedule(20, () -> {
             if (entity.isAlive() && entity.getWorld().isChunkLoaded(entity.getBlockPos().getX(), entity.getBlockPos().getZ())) {
                 entity.setNoGravity(false);
@@ -82,15 +73,13 @@ public class EntityVelocityManipulation {
         Vec3d center = player.getPos();
         double radius = REPULSION_RADIUS;
 
-        // Generate particles in a spherical pattern
-        for (int i = 0; i < density; i++) { // Adjust for density
-            double theta = Math.random() * 2 * Math.PI; // Angle around the vertical axis
-            double phi = Math.acos(2 * Math.random() - 1); // Angle from the vertical axis
+        for (int i = 0; i < density; i++) {
+            double theta = Math.random() * 2 * Math.PI;
+            double phi = Math.acos(2 * Math.random() - 1);
             double x = center.x + radius * Math.sin(phi) * Math.cos(theta);
             double y = center.y + radius * Math.sin(phi) * Math.sin(theta);
             double z = center.z + radius * Math.cos(phi);
 
-            // Spawn a particle at the calculated position
             world.spawnParticles(ParticleTypes.SCRAPE, x, y, z, 1, 0, 0, 0, 0); // Adjust particle type and count
         }
     }
@@ -105,10 +94,8 @@ public class EntityVelocityManipulation {
         Vec3d playerPos = player.getPos();
         Vec3d entityPos = entity.getPos();
 
-        // Calculate the direction vector from the player to the entity
         Vec3d direction = entityPos.subtract(playerPos).normalize();
 
-        // Apply a velocity to push the entity away
         Vec3d repulsion = direction.multiply(REPULSION_STRENGTH);
         entity.addVelocity(repulsion.x, repulsion.y * 0.5, repulsion.z); // Slight vertical push
         entity.velocityDirty = true;

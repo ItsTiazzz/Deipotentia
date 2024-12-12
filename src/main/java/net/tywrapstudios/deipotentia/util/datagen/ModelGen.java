@@ -25,6 +25,7 @@ public class ModelGen extends FabricModelProvider {
         simpleItem(DRegistry.DItems.SOUL_ITEM, generator);
         simpleItem(DRegistry.DItems.EMPTY_SOUL, generator);
         simpleItem(DRegistry.DItems.SOUL_BLEACHER, generator);
+        simpleItem(DRegistry.DItems.STURDY_TEMPLATE, generator);
     }
 
     private void simpleItem(Item item, ItemModelGenerator generator) {
