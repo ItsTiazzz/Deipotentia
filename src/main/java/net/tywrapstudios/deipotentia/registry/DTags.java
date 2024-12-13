@@ -2,9 +2,9 @@ package net.tywrapstudios.deipotentia.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.tywrapstudios.deipotentia.Deipotentia;
 
 public class DTags {
@@ -21,7 +21,7 @@ public class DTags {
         public TagKey<Item> get() { return tagKey; }
 
         private static TagKey<Item> of(String name) {
-            return TagKey.of(Registries.ITEM.getKey(), new Identifier(Deipotentia.MOD_ID, name));
+            return TagKey.of(Registry.ITEM.getKey(), new Identifier(Deipotentia.MOD_ID, name));
         }
     }
 
@@ -36,7 +36,7 @@ public class DTags {
         public TagKey<Block> get() { return tagKey; }
 
         private static TagKey<Block> of(String name) {
-            return TagKey.of(Registries.BLOCK.getKey(), new Identifier(Deipotentia.MOD_ID, name));
+            return TagKey.of(Registry.BLOCK.getKey(), new Identifier(Deipotentia.MOD_ID, name));
         }
     }
 }

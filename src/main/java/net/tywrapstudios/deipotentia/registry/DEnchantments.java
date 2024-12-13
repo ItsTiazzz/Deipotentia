@@ -1,9 +1,8 @@
 package net.tywrapstudios.deipotentia.registry;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.enchantment.SoulBoundEnchantment;
 
@@ -15,7 +14,7 @@ public class DEnchantments {
     }
 
     private static Enchantment create(String id, Enchantment entry) {
-        return Registry.register(Registries.ENCHANTMENT, new Identifier(Deipotentia.MOD_ID, id), entry);
+        return Registry.register(Registry.ENCHANTMENT, new Identifier(Deipotentia.MOD_ID, id), entry);
     }
 
     public static void register() {

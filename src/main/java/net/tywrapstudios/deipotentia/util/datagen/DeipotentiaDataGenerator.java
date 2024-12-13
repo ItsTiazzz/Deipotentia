@@ -6,9 +6,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 public class DeipotentiaDataGenerator implements DataGeneratorEntrypoint {
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
-		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
-		pack.addProvider(ModelGen::new);
-		pack.addProvider(TagGen.Block::new);
-		pack.addProvider(TagGen.Item::new);
+		fabricDataGenerator.addProvider(ModelGen::new);
+		fabricDataGenerator.addProvider(TagGen.Block::new);
+		fabricDataGenerator.addProvider(TagGen.Item::new);
 	}
 }

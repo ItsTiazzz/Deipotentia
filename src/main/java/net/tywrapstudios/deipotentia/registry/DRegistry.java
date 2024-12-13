@@ -7,9 +7,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.block.HephaestusForgeBlock;
 import net.tywrapstudios.deipotentia.item.*;
@@ -67,7 +66,7 @@ public class DRegistry {
 
         private static Item create(String name, Item item) {
             ITEMS.add(item);
-            return Registry.register(Registries.ITEM, new Identifier(Deipotentia.MOD_ID, name), item);
+            return Registry.register(Registry.ITEM, new Identifier(Deipotentia.MOD_ID, name), item);
         }
 
         public static List<Item> register() {
@@ -87,11 +86,11 @@ public class DRegistry {
         private static Block create(String name, Block block) {
             BLOCKS.add(block);
             createBlockItem(name, block);
-            return Registry.register(Registries.BLOCK, new Identifier(Deipotentia.MOD_ID, name), block);
+            return Registry.register(Registry.BLOCK, new Identifier(Deipotentia.MOD_ID, name), block);
         }
 
         private static void createBlockItem(String name, Block block) {
-            Registry.register(Registries.ITEM, new Identifier(Deipotentia.MOD_ID, name), new BlockItem(block, new FabricItemSettings()));
+            Registry.register(Registry.ITEM, new Identifier(Deipotentia.MOD_ID, name), new BlockItem(block, new FabricItemSettings()));
         }
 
         public static List<Block> register() {

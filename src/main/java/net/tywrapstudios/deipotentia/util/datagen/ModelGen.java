@@ -1,14 +1,14 @@
 package net.tywrapstudios.deipotentia.util.datagen;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
 
 public class ModelGen extends FabricModelProvider {
-    public ModelGen(FabricDataOutput output) {
-        super(output);
+    public ModelGen(FabricDataGenerator dataGenerator) {
+        super(dataGenerator);
     }
 
     @Override
