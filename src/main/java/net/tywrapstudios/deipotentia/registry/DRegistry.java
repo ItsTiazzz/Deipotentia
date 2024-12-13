@@ -77,6 +77,7 @@ public class DRegistry {
 
     public static class DBlocks {
         public static List<Block> BLOCKS = new ArrayList<>();
+
         public static final Block HEPHAESTUS_FORGE;
 
         static {

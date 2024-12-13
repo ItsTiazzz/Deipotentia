@@ -12,7 +12,7 @@
   "item.deipotentia.soul_bleacher": "Soul Bleacher",
   "item.deipotentia.soul_item": "Soul Manifestation",
   "item.deipotentia.empty_soul": "Empty Soul",
-  "item.minecraft.cooked_porkchop": "Pooked Corkchop",
+  "item.minecraft.cooked_porkchop": "Pooked Cockchop",
 
   "container.deipotentia.hephaestus_forge": "Hephaestus Forge",
 
@@ -22,6 +22,7 @@
   "misc.deipotentia.text.invalid_uuid_3": "Nah look at this twink. I'm not giving power to that.",
   "misc.deipotentia.text.enabled": "Active",
 
+  "tooltip.deipotentia.misc.hold_shift": "SHIFT",
   "tooltip.deipotentia.sickle.warped_sickle": "A tool capable of bringing the master's soul along when thrown.",
   "tooltip.deipotentia.sickle.warped_sickle.sec": "Used similar to an ender pearl on right click.",
   "tooltip.deipotentia.sickle.crimson_sickle": "A tool forged in the depths of literal hell, still hot and fresh for use.",

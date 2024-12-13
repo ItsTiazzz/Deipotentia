@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
+import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.registry.DTags;
 
 public class EntityVelocityManipulation {
@@ -31,7 +32,7 @@ public class EntityVelocityManipulation {
     }
 
     public static void freezeAndDropEntity(LivingEntity entity, int freezeDurationTicks) {
-        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos().getX(), entity.getBlockPos().getZ())) {
+        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos())) {
             return;
         }
 
@@ -48,19 +49,18 @@ public class EntityVelocityManipulation {
     }
 
     public static void freezeEntityForRepulsingItem(LivingEntity entity) {
-        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos().getX(), entity.getBlockPos().getZ())) {
+        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos())) {
+            Deipotentia.LOGGING.debugWarning("Entity is not alive or chunk is not loaded: " + entity);
             return;
         }
 
         entity.setVelocity(0, 0, 0);
-        entity.setMovementSpeed(-1);
         entity.velocityDirty = true;
         entity.velocityModified = true;
-        entity.fallDistance = 0;
         entity.setNoGravity(true);
 
         TickScheduler.schedule(20, () -> {
-            if (entity.isAlive() && entity.getWorld().isChunkLoaded(entity.getBlockPos().getX(), entity.getBlockPos().getZ())) {
+            if (entity.isAlive() && entity.getWorld().isChunkLoaded(entity.getBlockPos())) {
                 entity.setNoGravity(false);
             }
         });
@@ -97,7 +97,7 @@ public class EntityVelocityManipulation {
         Vec3d direction = entityPos.subtract(playerPos).normalize();
 
         Vec3d repulsion = direction.multiply(REPULSION_STRENGTH);
-        entity.addVelocity(repulsion.x, repulsion.y * 0.5, repulsion.z); // Slight vertical push
+        entity.addVelocity(repulsion.x, repulsion.y * 0.5, repulsion.z);
         entity.velocityDirty = true;
     }
 }

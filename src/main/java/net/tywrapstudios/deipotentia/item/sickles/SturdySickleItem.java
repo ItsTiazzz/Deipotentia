@@ -1,5 +1,6 @@
 package net.tywrapstudios.deipotentia.item.sickles;
 
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.Vec3d;
@@ -19,12 +21,15 @@ import java.util.List;
 
 public class SturdySickleItem extends HoeItem {
     public SturdySickleItem(Settings settings) {
-        super(ToolMaterials.NETHERITE, 4, -1.5f, settings.rarity(Rarity.UNCOMMON));
+        super(ToolMaterials.NETHERITE, 4, -1.5f, settings);
     }
 
     @Override
-    public Text getName() {
-        return Text.translatable(this.getTranslationKey()).formatted(Formatting.DARK_RED);
+    public Text getName(ItemStack stack) {
+        stack.removeCustomName();
+        stack.setCustomName(Text.translatable(this.getTranslationKey()).setStyle(Style.EMPTY.withColor(
+                Formatting.DARK_GRAY).withItalic(false)));
+        return stack.getName();
     }
 
     @Override
@@ -74,8 +79,15 @@ public class SturdySickleItem extends HoeItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        if (Screen.hasShiftDown()) {
         tooltip.add(Text.translatable("tooltip.deipotentia.sickle.sturdy_sickle").formatted(Formatting.ITALIC, Formatting.GOLD));
         tooltip.add(Text.translatable("tooltip.deipotentia.sickle.sturdy_sickle.sec").formatted(Formatting.ITALIC, Formatting.DARK_GRAY));
+        } else {
+            Text shift = Text.literal("[").formatted(Formatting.GOLD)
+                    .append(Text.translatable("tooltip.deipotentia.misc.hold_shift").formatted(Formatting.GRAY, Formatting.ITALIC))
+                    .append(Text.literal("]").formatted(Formatting.GOLD));
+            tooltip.add(shift);
+        }
         super.appendTooltip(stack, world, tooltip, context);
     }
 }
