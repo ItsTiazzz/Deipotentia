@@ -7,8 +7,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.block.HephaestusForgeBlock;
 import net.tywrapstudios.deipotentia.item.*;
@@ -48,8 +49,10 @@ public class DRegistry {
             VALSOULSTRANGLER_DEACTIVATED = create("valsoulstrangler_deactivated", new Deactivated.ValSoulStrangler(new FabricItemSettings()
                     .maxCount(1)));
             WARPED_SICKLE = create("warped_sickle", new WarpedSickleItem(new FabricItemSettings()));
-            CRIMSON_SICKLE = create("crimson_sickle", new CrimsonSickleItem(new FabricItemSettings()));
-            STURDY_SICKLE = create("sturdy_sickle", new SturdySickleItem(new FabricItemSettings()));
+            CRIMSON_SICKLE = create("crimson_sickle", new CrimsonSickleItem(new FabricItemSettings()
+                    .fireproof()));
+            STURDY_SICKLE = create("sturdy_sickle", new SturdySickleItem(new FabricItemSettings()
+                    .fireproof()));
             NYMPH_SICKLE = create("nymph_sickle", new NymphSickleItem(new FabricItemSettings()));
             ANGELS_GUARD = create("angels_guard", new AngelsGuardItem(new FabricItemSettings()
                     .maxCount(1)));
@@ -66,7 +69,7 @@ public class DRegistry {
 
         private static Item create(String name, Item item) {
             ITEMS.add(item);
-            return Registry.register(Registry.ITEM, new Identifier(Deipotentia.MOD_ID, name), item);
+            return Registry.register(Registries.ITEM, new Identifier(Deipotentia.MOD_ID, name), item);
         }
 
         public static List<Item> register() {
@@ -86,11 +89,11 @@ public class DRegistry {
         private static Block create(String name, Block block) {
             BLOCKS.add(block);
             createBlockItem(name, block);
-            return Registry.register(Registry.BLOCK, new Identifier(Deipotentia.MOD_ID, name), block);
+            return Registry.register(Registries.BLOCK, new Identifier(Deipotentia.MOD_ID, name), block);
         }
 
         private static void createBlockItem(String name, Block block) {
-            Registry.register(Registry.ITEM, new Identifier(Deipotentia.MOD_ID, name), new BlockItem(block, new FabricItemSettings()));
+            Registry.register(Registries.ITEM, new Identifier(Deipotentia.MOD_ID, name), new BlockItem(block, new FabricItemSettings()));
         }
 
         public static List<Block> register() {

@@ -51,7 +51,7 @@ public class CrimsonSickleItem extends HoeItem {
             world.spawnEntity(E);
         }
 
-        user.getItemCooldownManager().set(this,10);
+        //user.getItemCooldownManager().set(this, 1);
         ItemStack I = user.getStackInHand(hand);
         I.damage(1,user,playerEntity -> playerEntity.sendToolBreakStatus(hand));
 
@@ -60,9 +60,7 @@ public class CrimsonSickleItem extends HoeItem {
 
     @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-        user.getStackInHand(hand).damage(1,user,playerEntity -> playerEntity.sendToolBreakStatus(hand));
-        entity.setOnFireFor(4);
-        return ActionResult.SUCCESS;
+        return this.use(user.getWorld(), user, hand).getResult();
     }
 
     @Override

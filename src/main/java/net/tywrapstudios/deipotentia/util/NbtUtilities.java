@@ -79,11 +79,11 @@ public class NbtUtilities {
     }
 
     public static void setEnabled(ItemStack itemStack, boolean value) {
-        setBooleanValue(itemStack, "enabled", value);
+        setBooleanValue(itemStack, itemStack.getTranslationKey() + ".enabled", value);
     }
 
     public static boolean getEnabled(ItemStack itemStack) {
-       return getBooleanValue(itemStack, "enabled");
+       return getBooleanValue(itemStack, itemStack.getTranslationKey() + ".enabled");
     }
 
     /* CHECK AND SET LOGIC */

@@ -28,14 +28,14 @@ public class AngelsGuardItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity user, int slot, boolean selected) {
-        if (selected && user instanceof ServerPlayerEntity player) {
+        if (user instanceof ServerPlayerEntity player) {
             if (EntityVelocityManipulation.isHoldingRepulsionItem(player)) {
                 Box boundingBox = user.getBoundingBox().expand(REPULSION_RADIUS);
                 for (Entity entity : world.getNonSpectatingEntities(Entity.class, boundingBox)) {
                     EntityVelocityManipulation.pushEntityAwayFromPlayer(player, entity);
                     Deipotentia.LOGGING.debug("Found entity in radius of class: " + entity.getClass().getName());
                 }
-                EntityVelocityManipulation.spawnRepulsionParticles(player.getWorld(), player, Deipotentia.CONFIG_MANAGER.getConfig().particle_density);
+                EntityVelocityManipulation.spawnRepulsionParticles(player.getServerWorld(), player, Deipotentia.CONFIG_MANAGER.getConfig().particle_density);
                 EntityVelocityManipulation.freezeEntityForRepulsingItem(player);
             }
         }

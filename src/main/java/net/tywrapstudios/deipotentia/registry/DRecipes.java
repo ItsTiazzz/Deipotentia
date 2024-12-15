@@ -3,8 +3,9 @@ package net.tywrapstudios.deipotentia.registry;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.recipe.HephaestusForgeRecipe;
 
@@ -18,12 +19,12 @@ public class DRecipes {
     }
 
     private static <T extends Recipe<?>> RecipeSerializer<T> registerSerializer(String id, RecipeSerializer<T> serInstance) {
-        return Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(Deipotentia.MOD_ID, id),
+        return Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Deipotentia.MOD_ID, id),
                 serInstance);
     }
 
     private static <T extends Recipe<?>> RecipeType<T> registerType(String id, RecipeType<T> typeInstance) {
-        return Registry.register(Registry.RECIPE_TYPE, new Identifier(Deipotentia.MOD_ID, id),
+        return Registry.register(Registries.RECIPE_TYPE, new Identifier(Deipotentia.MOD_ID, id),
                 typeInstance);
     }
 }
