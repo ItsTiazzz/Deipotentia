@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "deipotentia:flax"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "deipotentia:cloth_carpet"
+  }
+}

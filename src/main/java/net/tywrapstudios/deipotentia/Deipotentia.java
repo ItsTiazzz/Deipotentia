@@ -7,6 +7,7 @@ import net.tywrapstudios.blossombridge.api.config.ConfigManager;
 import net.tywrapstudios.blossombridge.api.logging.LoggingHandler;
 import net.tywrapstudios.deipotentia.config.DeiConfig;
 import net.tywrapstudios.deipotentia.enchantment.SoulBoundEnchantment;
+import net.tywrapstudios.deipotentia.loot.LootStuffIdkWhatToCallThisClass;
 import net.tywrapstudios.deipotentia.registry.*;
 import net.tywrapstudios.deipotentia.registry.DEffects;
 import net.tywrapstudios.deipotentia.item.SoulItem;
@@ -35,6 +36,7 @@ public class Deipotentia implements ModInitializer {
 		SoulItem.Logic.initialize();
 		SoulBoundEnchantment.Logic.initialize();
 		TickScheduler.initialize();
+		LootStuffIdkWhatToCallThisClass.initialize();
 		LOGGING.debug("Initialized Logic.");
 
 		LOGGING.info("May your woes have Deipotentia, and their wishes be granted.");

@@ -1,6 +1,5 @@
 package net.tywrapstudios.deipotentia.util.datagen;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -16,6 +15,7 @@ public class ModelGen extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
         generator.registerSimpleCubeAll(DRegistry.DBlocks.HEPHAESTUS_FORGE);
+        generator.registerWoolAndCarpet(DRegistry.DBlocks.CLOTH, DRegistry.DBlocks.CLOTH_CARPET);
     }
 
     @Override
@@ -28,6 +28,8 @@ public class ModelGen extends FabricModelProvider {
         simpleItem(DRegistry.DItems.EMPTY_SOUL, generator);
         simpleItem(DRegistry.DItems.SOUL_BLEACHER, generator);
         simpleItem(DRegistry.DItems.STURDY_TEMPLATE, generator);
+        simpleItem(DRegistry.DBlocks.CLOTH_CARPET.asItem(), generator);
+        simpleItem(DRegistry.DItems.FLAX, generator);
     }
 
     private void simpleItem(Item item, ItemModelGenerator generator) {

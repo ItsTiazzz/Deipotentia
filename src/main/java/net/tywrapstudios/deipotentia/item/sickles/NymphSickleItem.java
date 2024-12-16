@@ -48,13 +48,14 @@ public class NymphSickleItem extends HoeItem {
                 breakCircle(world, pos, user);
                 assert user != null;
                 context.getStack().damage(1, user, playerEntity -> playerEntity.sendToolBreakStatus(hand));
+                user.swingHand(hand);
                 foundBlock = true;
             }
             if (!foundBlock) {
                 return super.useOnBlock(context);
             }
         }
-        return ActionResult.SUCCESS;
+        return super.useOnBlock(context);
     }
 
     private static boolean isAcceptAbleBlock(BlockState state) {

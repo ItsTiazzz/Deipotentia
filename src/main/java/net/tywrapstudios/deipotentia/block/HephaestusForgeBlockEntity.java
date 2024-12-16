@@ -29,7 +29,7 @@ public class HephaestusForgeBlockEntity extends BlockEntity implements NamedScre
 
     protected final PropertyDelegate propertyDelegate;
     private int progress = 0;
-    private int maxProgress = 72;
+    private int maxProgress = 200;
 
     public HephaestusForgeBlockEntity(BlockPos pos, BlockState state) {
         super(DBlockEntities.HEPHAESTUS_FORGE, pos, state);

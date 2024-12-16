@@ -20,6 +20,7 @@ import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.config.DeiConfig;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -116,7 +117,9 @@ public class NbtUtilities {
         LOGGER.debug("Player data dir at: " + playerDataDir);
         if (playerDataDir.exists()) {
             LOGGER.debug("Player data dir exists");
-            for (File playerFile : playerDataDir.listFiles((dir, name) -> name.endsWith(".dat"))) {
+            File[] playerFiles = playerDataDir.listFiles((dir, name) -> name.endsWith(".dat"));
+            assert playerFiles != null;
+            for (File playerFile : playerFiles) {
                 LOGGER.debug("Found player file at: " + playerFile);
                 try {
                     String uuidString = playerFile.getName().replace(".dat", "");

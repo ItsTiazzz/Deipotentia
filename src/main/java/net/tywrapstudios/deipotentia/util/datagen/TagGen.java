@@ -18,7 +18,7 @@ public class TagGen {
         }
 
         protected void generateTags() {
-            this.getOrCreateTagBuilder(DTags.Blocks.NON_STURDY.get())
+            getOrCreateTagBuilder(DTags.Blocks.NON_STURDY.get())
                     .add(Blocks.AIR,
                             Blocks.GRASS,
                             Blocks.TALL_GRASS,
@@ -36,21 +36,21 @@ public class TagGen {
     }
 
     public static class Item extends FabricTagProvider.ItemTagProvider {
-        public Item(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture, @Nullable FabricTagProvider.BlockTagProvider blockTagProvider) {
-            super(output, completableFuture, blockTagProvider);
+        public Item(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+            super(output, completableFuture, null);
         }
 
         protected void generateTags() {
-            this.getOrCreateTagBuilder(DTags.Items.SICKLES.get())
+            getOrCreateTagBuilder(DTags.Items.SICKLES.get())
                     .add(DRegistry.DItems.CRIMSON_SICKLE)
                     .add(DRegistry.DItems.NYMPH_SICKLE)
                     .add(DRegistry.DItems.WARPED_SICKLE)
                     .add(DRegistry.DItems.STURDY_SICKLE);
-            this.getOrCreateTagBuilder(DTags.Items.NON_STURDY.get())
+            getOrCreateTagBuilder(DTags.Items.NON_STURDY.get())
                     .add(DRegistry.DItems.CRIMSON_SICKLE)
                     .add(DRegistry.DItems.NYMPH_SICKLE)
                     .add(DRegistry.DItems.WARPED_SICKLE);
-            this.getOrCreateTagBuilder(DTags.Items.REPULSING.get())
+            getOrCreateTagBuilder(DTags.Items.REPULSING.get())
                     .add(DRegistry.DItems.ANGELS_GUARD);
         }
 

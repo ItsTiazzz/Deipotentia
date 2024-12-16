@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CarpetBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -20,8 +21,6 @@ import net.tywrapstudios.deipotentia.item.sickles.WarpedSickleItem;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static net.tywrapstudios.deipotentia.registry.DItemGroup.DEI_GROUP;
 
 public class DRegistry {
     public static final List<ItemConvertible> ITEM_CONVERTIBLES = new ArrayList<>();
@@ -41,6 +40,7 @@ public class DRegistry {
         public static final Item SOUL_BLEACHER;
         public static final Item EMPTY_SOUL;
         public static final Item STURDY_TEMPLATE;
+        public static final Item FLAX;
 
         static {
             VALSOULSTRANGLER = create("valsoulstrangler", new ValSoulStranglerItem(new FabricItemSettings()
@@ -65,6 +65,7 @@ public class DRegistry {
             EMPTY_SOUL = create("empty_soul", new Item(new FabricItemSettings()
                     .maxCount(16)));
             STURDY_TEMPLATE = create("sturdy_template", new Item(new FabricItemSettings()));
+            FLAX = create("flax", new Item(new FabricItemSettings()));
         }
 
         private static Item create(String name, Item item) {
@@ -81,9 +82,13 @@ public class DRegistry {
         public static List<Block> BLOCKS = new ArrayList<>();
 
         public static final Block HEPHAESTUS_FORGE;
+        public static final Block CLOTH;
+        public static final Block CLOTH_CARPET;
 
         static {
             HEPHAESTUS_FORGE = create("hephaestus_forge", new HephaestusForgeBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
+            CLOTH = create("cloth", new Block(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)));
+            CLOTH_CARPET = create("cloth_carpet", new CarpetBlock((FabricBlockSettings.copyOf(Blocks.WHITE_CARPET))));
         }
 
         private static Block create(String name, Block block) {

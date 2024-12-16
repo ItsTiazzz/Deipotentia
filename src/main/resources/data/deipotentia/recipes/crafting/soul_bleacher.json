@@ -9,11 +9,14 @@
     },
     "&": {
       "item": "deipotentia:empty_soul"
+    },
+    "@": {
+      "item": "deipotentia:cloth"
     }
   },
   "pattern": [
     "$#$",
-    " & "
+    "@&@"
   ],
   "result": {
     "item": "deipotentia:soul_bleacher"
