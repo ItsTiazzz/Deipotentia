@@ -1,13 +1,11 @@
 package net.tywrapstudios.deipotentia.util.datagen;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
 import net.tywrapstudios.deipotentia.registry.DTags;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -52,6 +50,16 @@ public class TagGen {
                     .add(DRegistry.DItems.WARPED_SICKLE);
             getOrCreateTagBuilder(DTags.Items.REPULSING.get())
                     .add(DRegistry.DItems.ANGELS_GUARD);
+            getOrCreateTagBuilder(DTags.Items.RANGED_WEAPONS.get())
+                    .add(DRegistry.DItems.CRIMSON_SICKLE)
+                    .add(DRegistry.DItems.WARPED_SICKLE)
+                    .add(DRegistry.DItems.STURDY_SICKLE)
+                    .add(DRegistry.DItems.NYMPH_SICKLE);
+            getOrCreateTagBuilder(DTags.Items.DISPLAYABLE.get())
+                    .add(DRegistry.DItems.CRIMSON_SICKLE)
+                    .add(DRegistry.DItems.WARPED_SICKLE)
+                    .add(DRegistry.DItems.STURDY_SICKLE)
+                    .add(DRegistry.DItems.NYMPH_SICKLE);
         }
 
         @Override

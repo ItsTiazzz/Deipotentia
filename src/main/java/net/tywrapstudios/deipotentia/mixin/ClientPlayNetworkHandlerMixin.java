@@ -26,7 +26,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
     private void dei$addValsoulstranglerTotemLogic(EntityStatusS2CPacket packet, CallbackInfo ci) {
         if (this.client.world != null) {
             Entity entity = packet.getEntity(this.client.world);
-            if (packet.getStatus() == 100) { // 100 -> Custom Totem Byte
+            if (entity != null && packet.getStatus() == 100) { // 100 -> Custom Totem Byte
                 this.client.particleManager.addEmitter(entity, ParticleTypes.FLAME, 30);
                 this.client.particleManager.addEmitter(entity, ParticleTypes.SOUL_FIRE_FLAME, 30);
                 this.world.playSound(

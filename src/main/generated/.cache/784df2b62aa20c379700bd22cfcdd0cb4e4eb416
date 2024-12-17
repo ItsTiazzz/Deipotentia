@@ -1,4 +1,6 @@
-// 1.20.1	2024-12-16T16:04:10.4656638	Deipotentia/Tags for minecraft:item
+// 1.20.1	2024-12-17T00:33:58.1186467	Deipotentia/Tags for minecraft:item
 7c0f7c7186c05117923a18aa89a9f3dfdc2a94b1 data\deipotentia\tags\items\repulsing.json
 e2d3fe93a772defc6e70fc6bc2bf55aea3b705f5 data\deipotentia\tags\items\non_sturdy.json
+99e99f3d8c890ed9710867ead587eb8c5fb63c10 data\arsenal\tags\items\ranged_weapons.json
+99e99f3d8c890ed9710867ead587eb8c5fb63c10 data\arsenal\tags\items\displayable.json
 3c38166a41581a388fcfe5acd6829919ca8d3ac4 data\deipotentia\tags\items\sickles.json
