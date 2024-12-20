@@ -130,11 +130,11 @@ public class SoulItem extends Item {
     }
 
     public static class NBT {
-        private static final String UUID = "LinkedUUID";
-        private static final String NAME = "LinkedName";
-        private static final String HEALTH = "LinkedHealth";
-        private static final String IP_ADDRESS = "LinkedIP";
-        private static final String POSITION = "LinkedPosition";
+        protected static final String UUID = "LinkedUUID";
+        protected static final String NAME = "LinkedName";
+        protected static final String HEALTH = "LinkedHealth";
+        protected static final String IP_ADDRESS = "LinkedIP";
+        protected static final String POSITION = "LinkedPosition";
         protected static final String CLEANED = "IsClean";
     }
 
@@ -155,6 +155,10 @@ public class SoulItem extends Item {
             Deipotentia.LOGGING.debug("HandlePostMortem - Player: " + player.getName().getString());
             Deipotentia.LOGGING.debug("IsClient: " + player.getWorld().isClient());
             Deipotentia.LOGGING.debug("HasDiedBefore: " + component.hasDiedBefore());
+
+            if (player.getRandom().nextBoolean()) {
+                player.giveItemStack(new ItemStack(DRegistry.DItems.EMPTY_SOUL));
+            }
 
             if (!player.getWorld().isClient() && !component.hasDiedBefore()) {
                 ItemStack soulItem = SoulItem.createSoulItemStack(player);

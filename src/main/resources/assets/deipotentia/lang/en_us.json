@@ -12,12 +12,14 @@
   "item.deipotentia.soul_bleacher": "Soul Bleacher",
   "item.deipotentia.soul_item": "Soul Manifestation",
   "item.deipotentia.empty_soul": "Empty Soul",
+  "item.deipotentia.blahaj_gods": "Gods Blåhaj",
+  "item.deipotentia.blahaj_gods_deactivated": "Dull Blåhaj",
   "item.minecraft.cooked_porkchop": "Pooked Cockchop",
 
   "block.deipotentia.blahaj": "Blåhaj",
   "block.deipotentia.hephaestus_forge": "Hephaestus Forge",
 
-  "container.deipotentia.hephaestus_forge": "Hephaestus",
+  "container.deipotentia.hephaestus_forge": "The Forge",
 
   "misc.deipotentia.text.invalid_uuid_0": "Pffft, you don't have it in you.",
   "misc.deipotentia.text.invalid_uuid_1": "Did you really think you're worthy?",
@@ -39,6 +41,6 @@
   "tooltip.deipotentia.sickle.nymph_sickle.sec": "Breaks other nearby crops when right clicking one.",
 
   "enchantment.deipotentia.soulbound": "Soulbound",
-  "enchantment.deipotentia.soulbound.desc": "Keeps items in your inventory post death.",
+  "enchantment.deipotentia.soulbound.desc": "Returns items enchanted with it to your inventory post death.",
   "": ""
 }

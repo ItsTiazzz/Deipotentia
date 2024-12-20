@@ -14,7 +14,8 @@ public class DTags {
         REPULSING("repulsing"),
         DISPLAYABLE(new Identifier("arsenal", "displayable")),
         BIG_WEAPONS(new Identifier("arsenal", "big_weapons")),
-        RANGED_WEAPONS(new Identifier("arsenal", "ranged_weapons")),;
+        RANGED_WEAPONS(new Identifier("arsenal", "ranged_weapons")),
+        PLUSH("plush");
 
         private final TagKey<Item> tagKey;
 

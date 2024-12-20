@@ -60,6 +60,10 @@ public class TagGen {
                     .add(DRegistry.DItems.WARPED_SICKLE)
                     .add(DRegistry.DItems.STURDY_SICKLE)
                     .add(DRegistry.DItems.NYMPH_SICKLE);
+            getOrCreateTagBuilder(DTags.Items.PLUSH.get())
+                    .add(DRegistry.DItems.BLAHAJ)
+                    .add(DRegistry.DItems.BLAHAJ_GODS)
+                    .add(DRegistry.DItems.BLAHAJ_GODS_DEACTIVATED);
         }
 
         @Override

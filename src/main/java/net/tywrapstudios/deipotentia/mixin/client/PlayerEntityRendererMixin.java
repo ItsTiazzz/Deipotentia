@@ -4,7 +4,7 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.util.Hand;
-import net.tywrapstudios.deipotentia.item.BlahajItem;
+import net.tywrapstudios.deipotentia.registry.DTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,7 +18,7 @@ public abstract class PlayerEntityRendererMixin {
             cancellable = true
     )
     private static void deipotentia$cuddleBlahaj(AbstractClientPlayerEntity player, Hand hand, CallbackInfoReturnable<BipedEntityModel.ArmPose> ci) {
-        if(player.getStackInHand(hand).getItem() instanceof BlahajItem) {
+        if(player.getStackInHand(hand).isIn(DTags.Items.PLUSH.get())) {
             ci.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_HOLD);
             ci.cancel();
         }
