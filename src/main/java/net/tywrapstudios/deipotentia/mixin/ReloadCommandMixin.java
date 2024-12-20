@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ReloadCommandMixin {
     @Inject(method = "method_13530",
             at = @At(value = "HEAD"))
-    private static void dei$reloadConfigOnVanillaReload(CommandContext context, CallbackInfoReturnable<Integer> cir) {
+    private static void deipotentia$reloadConfigOnVanillaReload(CommandContext context, CallbackInfoReturnable<Integer> cir) {
         Deipotentia.CONFIG_MANAGER.loadConfig();
         Deipotentia.LOGGING.info("Reloading Config...");
     }

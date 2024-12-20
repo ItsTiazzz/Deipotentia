@@ -18,6 +18,5 @@ public class DEffects {
         return Registry.register(Registries.STATUS_EFFECT, new Identifier(Deipotentia.MOD_ID, name), entry);
     }
 
-    public static void register() {
-    }
+    public static void register() {}
 }

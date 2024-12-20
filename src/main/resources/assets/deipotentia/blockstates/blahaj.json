@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "deipotentia:block/blahaj",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "deipotentia:block/blahaj"
+    },
+    "facing=south": {
+      "model": "deipotentia:block/blahaj",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "deipotentia:block/blahaj",
+      "y": 270
+    }
+  }
+}

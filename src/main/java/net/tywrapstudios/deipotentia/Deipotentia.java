@@ -23,6 +23,8 @@ public class Deipotentia implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		CONFIG_MANAGER.loadConfig();
+		CONFIG_MANAGER.getConfig().util_config.debug_mode = true;
+		CONFIG_MANAGER.saveConfig();
 
 		DRegistry.registerAll();
 		DBlockEntities.register();
@@ -31,6 +33,7 @@ public class Deipotentia implements ModInitializer {
 		DItemGroup.register();
 		DEffects.register();
 		DEnchantments.register();
+		DSounds.register();
 		LOGGING.debug("Registered Content.");
 
 		SoulItem.Logic.initialize();

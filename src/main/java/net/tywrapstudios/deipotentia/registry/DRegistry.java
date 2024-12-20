@@ -12,8 +12,12 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.tywrapstudios.deipotentia.Deipotentia;
+import net.tywrapstudios.deipotentia.block.BlahajBlock;
 import net.tywrapstudios.deipotentia.block.HephaestusForgeBlock;
 import net.tywrapstudios.deipotentia.item.*;
+import net.tywrapstudios.deipotentia.item.deactivated.DeactivatedAG;
+import net.tywrapstudios.deipotentia.item.deactivated.DeactivatedBH;
+import net.tywrapstudios.deipotentia.item.deactivated.DeactivatedVSS;
 import net.tywrapstudios.deipotentia.item.sickles.CrimsonSickleItem;
 import net.tywrapstudios.deipotentia.item.sickles.NymphSickleItem;
 import net.tywrapstudios.deipotentia.item.sickles.SturdySickleItem;
@@ -21,6 +25,9 @@ import net.tywrapstudios.deipotentia.item.sickles.WarpedSickleItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static net.tywrapstudios.deipotentia.registry.DRegistry.DBlocks.*;
+import static net.tywrapstudios.deipotentia.registry.DRegistry.DItems.*;
 
 public class DRegistry {
     public static final List<ItemConvertible> ITEM_CONVERTIBLES = new ArrayList<>();
@@ -41,13 +48,15 @@ public class DRegistry {
         public static final Item EMPTY_SOUL;
         public static final Item STURDY_TEMPLATE;
         public static final Item FLAX;
+        public static final Item BLAHAJ;
+        public static final Item BLAHAJ_GODS;
+        public static final Item BLAHAJ_GODS_DEACTIVATED;
 
         static {
             VALSOULSTRANGLER = create("valsoulstrangler", new ValSoulStranglerItem(new FabricItemSettings()
                     .maxCount(1)
                     .maxDamage(6)));
-            VALSOULSTRANGLER_DEACTIVATED = create("valsoulstrangler_deactivated", new Deactivated.ValSoulStrangler(new FabricItemSettings()
-                    .maxCount(1)));
+            VALSOULSTRANGLER_DEACTIVATED = create("valsoulstrangler_deactivated", new DeactivatedVSS(new FabricItemSettings()));
             WARPED_SICKLE = create("warped_sickle", new WarpedSickleItem(new FabricItemSettings()));
             CRIMSON_SICKLE = create("crimson_sickle", new CrimsonSickleItem(new FabricItemSettings()
                     .fireproof()));
@@ -56,8 +65,7 @@ public class DRegistry {
             NYMPH_SICKLE = create("nymph_sickle", new NymphSickleItem(new FabricItemSettings()));
             ANGELS_GUARD = create("angels_guard", new AngelsGuardItem(new FabricItemSettings()
                     .maxCount(1)));
-            ANGELS_GUARD_DEACTIVATED = create("angels_guard_deactivated", new Deactivated.AngelsGuard(new FabricItemSettings()
-                    .maxCount(1)));
+            ANGELS_GUARD_DEACTIVATED = create("angels_guard_deactivated", new DeactivatedAG(new FabricItemSettings()));
             SOUL_ITEM = create("soul_item", new SoulItem(new FabricItemSettings()
                     .maxCount(1)));
             SOUL_BLEACHER = create("soul_bleacher", new SoulBleacherItem(new FabricItemSettings()
@@ -66,6 +74,9 @@ public class DRegistry {
                     .maxCount(16)));
             STURDY_TEMPLATE = create("sturdy_template", new Item(new FabricItemSettings()));
             FLAX = create("flax", new Item(new FabricItemSettings()));
+            BLAHAJ = create("blahaj", new BlahajItem(BLAHAJ_BLOCK, new FabricItemSettings()));
+            BLAHAJ_GODS = create("blahaj_gods", new BlahajGodsItem(new FabricItemSettings()));
+            BLAHAJ_GODS_DEACTIVATED = create("blahaj_gods_deactivated", new DeactivatedBH(new FabricItemSettings()));
         }
 
         private static Item create(String name, Item item) {
@@ -84,16 +95,26 @@ public class DRegistry {
         public static final Block HEPHAESTUS_FORGE;
         public static final Block CLOTH;
         public static final Block CLOTH_CARPET;
+        public static final Block BLAHAJ_BLOCK;
 
         static {
             HEPHAESTUS_FORGE = create("hephaestus_forge", new HephaestusForgeBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
             CLOTH = create("cloth", new Block(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)));
             CLOTH_CARPET = create("cloth_carpet", new CarpetBlock((FabricBlockSettings.copyOf(Blocks.WHITE_CARPET))));
+            BLAHAJ_BLOCK = create("blahaj", new BlahajBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)), false);
         }
 
         private static Block create(String name, Block block) {
             BLOCKS.add(block);
             createBlockItem(name, block);
+            return Registry.register(Registries.BLOCK, new Identifier(Deipotentia.MOD_ID, name), block);
+        }
+
+        private static Block create(String name, Block block, boolean includeItem) {
+            if (includeItem) {
+                BLOCKS.add(block);
+                createBlockItem(name, block);
+            }
             return Registry.register(Registries.BLOCK, new Identifier(Deipotentia.MOD_ID, name), block);
         }
 

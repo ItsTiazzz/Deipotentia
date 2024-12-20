@@ -1,4 +1,4 @@
-package net.tywrapstudios.deipotentia.mixin;
+package net.tywrapstudios.deipotentia.mixin.client;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -9,6 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
+import net.tywrapstudios.deipotentia.registry.DRegistry;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,24 +24,23 @@ public abstract class ClientPlayNetworkHandlerMixin {
 
     @Inject(method = "onEntityStatus",
             at = @At(value = "TAIL"))
-    private void dei$addValsoulstranglerTotemLogic(EntityStatusS2CPacket packet, CallbackInfo ci) {
+    private void deipotentia$addValsoulstranglerTotemLogic(EntityStatusS2CPacket packet, CallbackInfo ci) {
         if (this.client.world != null) {
             Entity entity = packet.getEntity(this.client.world);
             if (entity != null && packet.getStatus() == 100) { // 100 -> Custom Totem Byte
                 this.client.particleManager.addEmitter(entity, ParticleTypes.FLAME, 30);
                 this.client.particleManager.addEmitter(entity, ParticleTypes.SOUL_FIRE_FLAME, 30);
-                this.world.playSound(
+                this.world.playSound(null,
                         entity.getX(),
                         entity.getY(),
                         entity.getZ(),
                         SoundEvents.ITEM_TOTEM_USE,
                         entity.getSoundCategory(),
                         2.0f,
-                        0.1f,
-                        false
+                        0.1f
                 );
                 if (entity == this.client.player) {
-                    this.client.gameRenderer.showFloatingItem(new ItemStack(Items.WAXED_OXIDIZED_CUT_COPPER_STAIRS));
+                    this.client.gameRenderer.showFloatingItem(new ItemStack(DRegistry.DItems.VALSOULSTRANGLER));
                 }
             }
         }

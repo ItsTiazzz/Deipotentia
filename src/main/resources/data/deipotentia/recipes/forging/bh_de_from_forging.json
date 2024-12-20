@@ -3,10 +3,10 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "minecraft:totem_of_undying"
+      "item": "deipotentia:blahaj"
     }
   ],
   "result": {
-    "item": "deipotentia:valsoulstrangler_deactivated"
+    "item": "deipotentia:blahaj_gods_deactivated"
   }
 }

@@ -23,6 +23,5 @@ public class DItemGroup {
                         }).build());
     }
 
-    public static void register() {
-    }
+    public static void register() {}
 }

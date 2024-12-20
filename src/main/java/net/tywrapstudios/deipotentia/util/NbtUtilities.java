@@ -87,7 +87,7 @@ public class NbtUtilities {
        return getBooleanValue(itemStack, itemStack.getTranslationKey() + ".enabled");
     }
 
-    /* CHECK AND SET LOGIC */
+    /* NBT IN PLAYER DATA LOGIC */
     public static boolean checkOnlinePlayersForItem(MinecraftServer server, Item target, String key) {
         LOGGER.debug("Checking online players for item.");
         for (ServerPlayerEntity targetPlayer : server.getPlayerManager().getPlayerList()) {

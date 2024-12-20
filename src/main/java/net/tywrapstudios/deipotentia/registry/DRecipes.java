@@ -10,13 +10,15 @@ import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.recipe.HephaestusForgeRecipe;
 
 public class DRecipes {
-    public static RecipeSerializer<HephaestusForgeRecipe> HEPHAESTUS_SERIALIZER;
-    public static RecipeType<HephaestusForgeRecipe> HEPHAESTUS_TYPE;
+    public static final RecipeSerializer<HephaestusForgeRecipe> HEPHAESTUS_SERIALIZER;
+    public static final RecipeType<HephaestusForgeRecipe> HEPHAESTUS_TYPE;
 
-    public static void register() {
+    static {
         HEPHAESTUS_SERIALIZER = registerSerializer(HephaestusForgeRecipe.Serializer.ID, HephaestusForgeRecipe.Serializer.INSTANCE);
         HEPHAESTUS_TYPE = registerType(HephaestusForgeRecipe.Type.ID, HephaestusForgeRecipe.Type.INSTANCE);
     }
+
+    public static void register() {}
 
     private static <T extends Recipe<?>> RecipeSerializer<T> registerSerializer(String id, RecipeSerializer<T> serInstance) {
         return Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Deipotentia.MOD_ID, id),

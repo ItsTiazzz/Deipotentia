@@ -18,7 +18,7 @@ public abstract class LivingEntityMixin {
     @Inject(method = "tryUseTotem",
             at = @At("HEAD"),
             cancellable = true)
-    private void dei$tryUseValsoulstrangler(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
+    private void deipotentia$tryUseValsoulstrangler(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
         if (source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             cir.setReturnValue(false);
         } else {

@@ -4,10 +4,11 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
+import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
 
 public class ModelGen extends FabricModelProvider {
-
     public ModelGen(FabricDataOutput output) {
         super(output);
     }

@@ -3,14 +3,20 @@ package net.tywrapstudios.deipotentia.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 import net.tywrapstudios.deipotentia.Deipotentia;
 
@@ -71,11 +77,13 @@ public class HephaestusForgeRecipe implements Recipe<SimpleInventory> {
     }
 
     public static class Type implements RecipeType<HephaestusForgeRecipe> {
+        private Type() {}
         public static final Type INSTANCE = new Type();
         public static final String ID = "hephaestus_forging";
     }
 
     public static class Serializer implements RecipeSerializer<HephaestusForgeRecipe> {
+        private Serializer() {}
         public static final Serializer INSTANCE = new Serializer();
         public static final String ID = "hephaestus_forging";
 
