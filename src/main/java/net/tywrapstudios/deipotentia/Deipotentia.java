@@ -9,7 +9,6 @@ import net.tywrapstudios.deipotentia.config.DeiConfig;
 import net.tywrapstudios.deipotentia.enchantment.SoulBoundEnchantment;
 import net.tywrapstudios.deipotentia.loot.LootStuffIdkWhatToCallThisClass;
 import net.tywrapstudios.deipotentia.registry.*;
-import net.tywrapstudios.deipotentia.registry.DEffects;
 import net.tywrapstudios.deipotentia.item.SoulItem;
 import net.tywrapstudios.deipotentia.util.TickScheduler;
 
@@ -31,7 +30,6 @@ public class Deipotentia implements ModInitializer {
 		DScreenHandlers.register();
 		DRecipes.register();
 		DItemGroup.register();
-		DEffects.register();
 		DEnchantments.register();
 		DSounds.register();
 		LOGGING.debug("Registered Content.");
