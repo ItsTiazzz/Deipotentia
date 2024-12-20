@@ -73,7 +73,7 @@ public class SoulItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (!world.isClient && (slot >= 8 || selected) && entity instanceof ServerPlayerEntity viewer) {
+        if (!world.isClient && (slot <= 8 || selected) && entity instanceof ServerPlayerEntity viewer) {
             if (stack.hasNbt()) {
                 NbtCompound nbt = stack.getNbt();
                 if (nbt != null && nbt.contains(NBT.UUID)) {
