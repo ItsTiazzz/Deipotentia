@@ -31,7 +31,6 @@ public class DeipotentiaClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player != null) {
                 PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(client.player);
-                Deipotentia.LOGGING.debug("PlayerViewing: " + component.isViewing() + ", " + client.player.getEntityName());
                 SOUL_VIEW_ENABLED = component.isViewing();
             }
         });

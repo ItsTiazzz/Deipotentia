@@ -12,12 +12,15 @@
   "item.deipotentia.soul_bleacher": "Soul Bleacher",
   "item.deipotentia.soul_item": "Soul Manifestation",
   "item.deipotentia.empty_soul": "Empty Soul",
-  "item.deipotentia.blahaj_gods": "Gods Blåhaj",
+  "item.deipotentia.blahaj_gods": "Divine Blåhaj",
   "item.deipotentia.blahaj_gods_deactivated": "Dull Blåhaj",
+  "item.deipotentia.flax": "Flax",
   "item.minecraft.cooked_porkchop": "Pooked Cockchop",
 
   "block.deipotentia.blahaj": "Blåhaj",
   "block.deipotentia.hephaestus_forge": "Hephaestus Forge",
+  "block.deipotentia.cloth": "Cloth Block",
+  "block.deipotentia.cloth_carpet": "Cloth",
 
   "container.deipotentia.hephaestus_forge": "The Forge",
 

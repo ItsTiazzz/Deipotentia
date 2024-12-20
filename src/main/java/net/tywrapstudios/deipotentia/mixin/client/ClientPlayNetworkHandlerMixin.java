@@ -9,7 +9,6 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
-import net.tywrapstudios.deipotentia.DeipotentiaClient;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,14 +30,14 @@ public abstract class ClientPlayNetworkHandlerMixin {
             if (entity != null && packet.getStatus() == 100) { // 100 -> Custom Totem Byte
                 this.client.particleManager.addEmitter(entity, ParticleTypes.FLAME, 30);
                 this.client.particleManager.addEmitter(entity, ParticleTypes.SOUL_FIRE_FLAME, 30);
-                this.world.playSound(null,
-                        entity.getX(),
+                this.world.playSound(entity.getX(),
                         entity.getY(),
                         entity.getZ(),
                         SoundEvents.ITEM_TOTEM_USE,
                         entity.getSoundCategory(),
                         2.0f,
-                        0.1f
+                        0.1f,
+                        false
                 );
                 if (entity == this.client.player) {
                     this.client.gameRenderer.showFloatingItem(new ItemStack(DRegistry.DItems.VALSOULSTRANGLER));

@@ -15,6 +15,10 @@ repositories {
 	maven { url = 'https://maven.ladysnake.org/releases' }
 }
 
+loom {
+	accessWidenerPath = file("src/main/resources/deipotentia.accesswidener")
+}
+
 fabricApi {
 	configureDataGeneration {
 		client = true

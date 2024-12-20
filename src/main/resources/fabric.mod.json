@@ -35,6 +35,7 @@
 		"fabric-api": "*",
 		"blossombridge": ">=1.1.1"
 	},
+	"accessWidener": "deipotentia.accesswidener",
 	"custom": {
 		"cardinal-components": [
 			"deipotentia:death_data",

@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -40,12 +41,11 @@ public class SoulItem extends Item {
                 ServerPlayerEntity linkedPlayer = user.getServer().getPlayerManager().getPlayer(linkedPlayerUuid);
                 PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(user);
 
-                if (linkedPlayer != null) {
+                if (linkedPlayer != null && linkedPlayer != user) {
                     component.setViewing(true, linkedPlayerUuid, user);
-                    user.setYaw(linkedPlayer.getYaw());
-                    user.setPitch(linkedPlayer.getPitch());
-                    user.getItemCooldownManager().set(this, 15*20);
-                    TickScheduler.schedule(10*20, () -> component.setViewing(false, linkedPlayerUuid, user));
+                    user.getItemCooldownManager().set(this, 15 * 20);
+
+                    TickScheduler.schedule(10 * 20, () -> component.setViewing(false, linkedPlayerUuid, user));
                 }
             }
         }
@@ -54,36 +54,26 @@ public class SoulItem extends Item {
 
     public static void tickViewing(ServerPlayerEntity viewer) {
         PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(viewer);
+        ServerPlayerEntity target = viewer.getServer().getPlayerManager().getPlayer(component.getViewingTarget());
+
         if (component.isViewing()) {
-            ServerPlayerEntity target = viewer.getServer().getPlayerManager().getPlayer(component.getViewingTarget());
             if (target != null) {
-                float yawDelta = target.getYaw() - viewer.getYaw();
-                float pitchDelta = target.getPitch() - viewer.getPitch();
-
-                while (yawDelta > 180) yawDelta -= 360;
-                while (yawDelta < -180) yawDelta += 360;
-
-                float smoothFactor = 0.15f;
-                float newYaw = viewer.getYaw() + yawDelta * smoothFactor;
-                float newPitch = viewer.getPitch() + pitchDelta * smoothFactor;
-
-                viewer.networkHandler.requestTeleport(
-                        viewer.getX(),
-                        viewer.getY(),
-                        viewer.getZ(),
-                        newYaw,
-                        newPitch
-                );
-
-                viewer.sendMessage(Text.literal("Observing " + target.getDisplayName().getString())
-                        .formatted(Formatting.RED), true);
+                viewer.setCameraEntity(target);
+                viewer.setInvisible(true);
+                viewer.setNoGravity(true);
+            }
+        } else {
+            if (viewer.getCameraEntity() == null || viewer.getCameraEntity() == target) {
+                viewer.setCameraEntity(viewer);
+                viewer.setInvisible(false);
+                viewer.setNoGravity(false);
             }
         }
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (!world.isClient && selected && entity instanceof ServerPlayerEntity viewer) {
+        if (!world.isClient && (slot >= 8 || selected) && entity instanceof ServerPlayerEntity viewer) {
             if (stack.hasNbt()) {
                 NbtCompound nbt = stack.getNbt();
                 if (nbt != null && nbt.contains(NBT.UUID)) {
@@ -121,8 +111,10 @@ public class SoulItem extends Item {
                                 .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ? " | IP: " : "")
                                 .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ? Text.literal("Blocked by CharterVPN") : Text.literal(""));
                     }
-
-                    viewer.sendMessage(text, true);
+                    PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(viewer);
+                    if (!component.isViewing()) {
+                        viewer.sendMessage(text, true);
+                    }
                 }
             }
         }
