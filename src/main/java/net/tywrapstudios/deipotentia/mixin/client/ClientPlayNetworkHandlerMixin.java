@@ -9,6 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
+import net.tywrapstudios.deipotentia.DeipotentiaClient;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

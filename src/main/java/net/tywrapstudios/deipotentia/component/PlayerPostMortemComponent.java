@@ -27,9 +27,7 @@ public class PlayerPostMortemComponent implements ComponentV3, AutoSyncedCompone
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-        boolean oldValue = this.hasDiedBefore;
         this.hasDiedBefore = tag.contains("HasDied") && tag.getBoolean("HasDied");
-        Deipotentia.LOGGING.debug("Reading NBT - Old value: " + oldValue + ", New value: " + this.hasDiedBefore + ", Has tag: " + tag.contains("HasDied"));
     }
 
     @Override

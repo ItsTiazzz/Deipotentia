@@ -37,7 +37,8 @@
 	},
 	"custom": {
 		"cardinal-components": [
-			"deipotentia:death_data"
+			"deipotentia:death_data",
+			"deipotentia:viewing_data"
 		]
 	},
 	"suggests": {

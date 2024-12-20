@@ -11,11 +11,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.DeipotentiaComponents;
 import net.tywrapstudios.deipotentia.component.PlayerPostMortemComponent;
+import net.tywrapstudios.deipotentia.component.PlayerViewingComponent;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
 import net.tywrapstudios.deipotentia.util.TickScheduler;
 
@@ -26,6 +28,57 @@ import java.util.UUID;
 public class SoulItem extends Item {
     public SoulItem(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack stack = user.getStackInHand(hand);
+        if (!world.isClient() && stack.hasNbt()) {
+            NbtCompound nbt = stack.getNbt();
+            if (nbt != null && nbt.contains(NBT.UUID)) {
+                UUID linkedPlayerUuid = nbt.getUuid(NBT.UUID);
+                ServerPlayerEntity linkedPlayer = user.getServer().getPlayerManager().getPlayer(linkedPlayerUuid);
+                PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(user);
+
+                if (linkedPlayer != null) {
+                    component.setViewing(true, linkedPlayerUuid, user);
+                    user.setYaw(linkedPlayer.getYaw());
+                    user.setPitch(linkedPlayer.getPitch());
+                    user.getItemCooldownManager().set(this, 15*20);
+                    TickScheduler.schedule(10*20, () -> component.setViewing(false, linkedPlayerUuid, user));
+                }
+            }
+        }
+        return TypedActionResult.success(stack);
+    }
+
+    public static void tickViewing(ServerPlayerEntity viewer) {
+        PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(viewer);
+        if (component.isViewing()) {
+            ServerPlayerEntity target = viewer.getServer().getPlayerManager().getPlayer(component.getViewingTarget());
+            if (target != null) {
+                float yawDelta = target.getYaw() - viewer.getYaw();
+                float pitchDelta = target.getPitch() - viewer.getPitch();
+
+                while (yawDelta > 180) yawDelta -= 360;
+                while (yawDelta < -180) yawDelta += 360;
+
+                float smoothFactor = 0.15f;
+                float newYaw = viewer.getYaw() + yawDelta * smoothFactor;
+                float newPitch = viewer.getPitch() + pitchDelta * smoothFactor;
+
+                viewer.networkHandler.requestTeleport(
+                        viewer.getX(),
+                        viewer.getY(),
+                        viewer.getZ(),
+                        newYaw,
+                        newPitch
+                );
+
+                viewer.sendMessage(Text.literal("Observing " + target.getDisplayName().getString())
+                        .formatted(Formatting.RED), true);
+            }
+        }
     }
 
     @Override
@@ -63,7 +116,7 @@ public class SoulItem extends Item {
                                 .append(Text.literal("20.0")
                                         .formatted(Formatting.OBFUSCATED, Formatting.DARK_GREEN))
                                 .append(" | Pos: ")
-                                .append(Text.literal("12, 85, 20")
+                                .append(Text.literal("00, 00, 00")
                                         .formatted(Formatting.OBFUSCATED, Formatting.DARK_AQUA))
                                 .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ? " | IP: " : "")
                                 .append(Deipotentia.CONFIG_MANAGER.getConfig().joke_mode ? Text.literal("Blocked by CharterVPN") : Text.literal(""));
@@ -144,6 +197,7 @@ public class SoulItem extends Item {
             ServerTickEvents.END_SERVER_TICK.register(server -> {
                 for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                     syncSoulItem(player);
+                    tickViewing(player);
                 }
             });
         }
