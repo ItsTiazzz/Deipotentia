@@ -19,7 +19,7 @@
 			"net.tywrapstudios.deipotentia.DeipotentiaClient"
 		],
 		"cardinal-components": [
-			"net.tywrapstudios.deipotentia.DeipotentiaComponents"
+          "net.tywrapstudios.deipotentia.component.DeipotentiaComponents"
 		],
 		"fabric-datagen": [
 			"net.tywrapstudios.deipotentia.util.datagen.DeipotentiaDataGenerator"
