@@ -11,6 +11,7 @@ import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.registry.DTags;
 
 public class EntityVelocityManipulation {
+    /* LAUNCHING ENTITIES */
     public static final double GRAVITY = 0.08; // Minecraft gravity
 
     public static void launchEntity(Entity entity, double forwardDistance, double upwardHeight) {
@@ -32,10 +33,6 @@ public class EntityVelocityManipulation {
     }
 
     public static void freezeAndDropEntity(LivingEntity entity, int freezeDurationTicks) {
-        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos())) {
-            return;
-        }
-
         entity.setVelocity(0, 0, 0);
         entity.velocityDirty = true;
         entity.velocityModified = true;
@@ -48,12 +45,12 @@ public class EntityVelocityManipulation {
         });
     }
 
-    public static void freezeEntityForRepulsingItem(LivingEntity entity) {
-        if (!entity.isAlive() || !entity.getWorld().isChunkLoaded(entity.getBlockPos())) {
-            Deipotentia.LOGGING.debugWarning("Entity is not alive or chunk is not loaded: " + entity);
-            return;
-        }
+    /* REPULSION */
 
+    public static final double REPULSION_RADIUS = 5.0; // Radius in blocks
+    public static final double REPULSION_STRENGTH = 0.5; // Strength of the push
+
+    public static void freezeEntityForRepulsingItem(LivingEntity entity) {
         entity.setVelocity(0, 0, 0);
         entity.velocityDirty = true;
         entity.velocityModified = true;
@@ -65,9 +62,6 @@ public class EntityVelocityManipulation {
             }
         });
     }
-
-    public static final double REPULSION_RADIUS = 5.0; // Radius in blocks
-    public static final double REPULSION_STRENGTH = 0.5; // Strength of the push
 
     public static void spawnRepulsionParticles(ServerWorld world, PlayerEntity player, int density) {
         Vec3d center = player.getPos();
@@ -87,7 +81,9 @@ public class EntityVelocityManipulation {
     public static boolean isHoldingRepulsionItem(PlayerEntity player) {
         ItemStack mainHandStack = player.getMainHandStack();
         ItemStack offHandStack = player.getOffHandStack();
-        return (NbtUtilities.getEnabled(mainHandStack) || NbtUtilities.getEnabled(offHandStack)) && (mainHandStack.streamTags().anyMatch(itemTagKey -> itemTagKey.isOf(DTags.Items.REPULSING.get().registry())) || offHandStack.streamTags().anyMatch(itemTagKey -> itemTagKey.isOf(DTags.Items.REPULSING.get().registry())));
+        boolean isMainValid = NbtUtilities.getEnabled(mainHandStack) && mainHandStack.isIn(DTags.Items.REPULSING.get());
+        boolean isOffHandValid = NbtUtilities.getEnabled(offHandStack) && offHandStack.isIn(DTags.Items.REPULSING.get());
+        return isMainValid || isOffHandValid;
     }
 
     public static void pushEntityAwayFromPlayer(PlayerEntity player, Entity entity) {
