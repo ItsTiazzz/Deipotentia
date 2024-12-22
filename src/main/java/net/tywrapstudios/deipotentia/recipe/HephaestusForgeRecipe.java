@@ -63,7 +63,7 @@ public class HephaestusForgeRecipe implements Recipe<SimpleInventory> {
 
     @Override
     public Identifier getId() {
-        return new Identifier(Deipotentia.MOD_ID, "hephaestus_forging");
+        return Deipotentia.id("hephaestus_forging");
     }
 
     @Override

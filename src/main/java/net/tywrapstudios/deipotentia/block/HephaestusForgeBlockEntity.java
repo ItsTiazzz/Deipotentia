@@ -1,5 +1,6 @@
 package net.tywrapstudios.deipotentia.block;
 
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,9 +10,10 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -24,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class HephaestusForgeBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory {
+public class HephaestusForgeBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
 
     protected final PropertyDelegate propertyDelegate;
@@ -145,4 +147,7 @@ public class HephaestusForgeBlockEntity extends BlockEntity implements NamedScre
     private static boolean canInsertAmountIntoOutputSlot(SimpleInventory inventory) {
         return inventory.getStack(1).getMaxCount() > inventory.getStack(1).getCount();
     }
+
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf) {}
 }

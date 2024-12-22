@@ -7,8 +7,11 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.util.Identifier;
+import net.tywrapstudios.deipotentia.component.DeipotentiaComponents;
 import net.tywrapstudios.deipotentia.component.PlayerViewingComponent;
 import net.tywrapstudios.deipotentia.registry.DScreenHandlers;
 import net.tywrapstudios.deipotentia.screen.HephaestusForgeScreen;
@@ -16,7 +19,7 @@ import net.tywrapstudios.deipotentia.screen.HephaestusForgeScreen;
 @Environment(EnvType.CLIENT)
 public class DeipotentiaClient implements ClientModInitializer {
     public static final ManagedShaderEffect SOUL_VIEW = ShaderEffectManager.getInstance()
-            .manage(new Identifier(Deipotentia.MOD_ID, "shaders/post/soul_view.json"));
+            .manage(Deipotentia.id("shaders/post/soul_view.json"));
     public static boolean SOUL_VIEW_ENABLED = false;
 
     @Override
@@ -28,11 +31,19 @@ public class DeipotentiaClient implements ClientModInitializer {
                 SOUL_VIEW.render(tickDelta);
             }
         });
+
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player != null) {
                 PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(client.player);
                 SOUL_VIEW_ENABLED = component.isViewing();
             }
         });
+
+        FabricLoader.getInstance().getModContainer(Deipotentia.MOD_ID).ifPresent(modContainer ->
+                ResourceManagerHelper.registerBuiltinResourcePack(
+                        Deipotentia.id("legacy_textures"),
+                        modContainer,
+                        ResourcePackActivationType.NORMAL
+                ));
     }
 }

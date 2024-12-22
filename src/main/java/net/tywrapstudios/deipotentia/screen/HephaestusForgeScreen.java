@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 import net.tywrapstudios.deipotentia.Deipotentia;
 
 public class HephaestusForgeScreen extends HandledScreen<HephaestusForgeScreenHandler> {
-    private static final Identifier TEXTURE = new Identifier(Deipotentia.MOD_ID, "textures/gui/hephaestus_gui.png");
+    private static final Identifier TEXTURE = Deipotentia.id("textures/gui/hephaestus_gui.png");
 
     public HephaestusForgeScreen(HephaestusForgeScreenHandler handler, PlayerInventory playerInventory, Text title) {
         super(handler, playerInventory, title);
