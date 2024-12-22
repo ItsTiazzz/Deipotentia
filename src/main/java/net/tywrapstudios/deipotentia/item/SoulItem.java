@@ -7,16 +7,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import net.tywrapstudios.deipotentia.Deipotentia;
-import net.tywrapstudios.deipotentia.DeipotentiaComponents;
+import net.tywrapstudios.deipotentia.component.DeipotentiaComponents;
 import net.tywrapstudios.deipotentia.component.PlayerPostMortemComponent;
 import net.tywrapstudios.deipotentia.component.PlayerViewingComponent;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
@@ -41,33 +41,39 @@ public class SoulItem extends Item {
                 ServerPlayerEntity linkedPlayer = user.getServer().getPlayerManager().getPlayer(linkedPlayerUuid);
                 PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(user);
 
-                if (linkedPlayer != null && linkedPlayer != user) {
-                    component.setViewing(true, linkedPlayerUuid, user);
+                if (linkedPlayer != null) {
+                    component.setViewingData(true, linkedPlayerUuid, user.getX(), user.getY(), user.getZ(), 10*20, user);
                     user.getItemCooldownManager().set(this, 15 * 20);
-
-                    TickScheduler.schedule(10 * 20, () -> component.setViewing(false, linkedPlayerUuid, user));
+                    Deipotentia.LOGGING.debug(String.format("[SoulItem$use] Setting ViewingData to %s, %s, %s, %s, %s, %s", true, user.getX(), user.getY(), user.getZ(), 10*20, user.getName().getString()));
                 }
             }
         }
-        return TypedActionResult.success(stack);
+        return TypedActionResult.success(stack, world.isClient());
     }
 
     public static void tickViewing(ServerPlayerEntity viewer) {
         PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(viewer);
         ServerPlayerEntity target = viewer.getServer().getPlayerManager().getPlayer(component.getViewingTarget());
 
-        if (component.isViewing()) {
+        if (component.getTime() <= -1) {
+            return;
+        }
+
+        if (component.getTime() > 0) {
             if (target != null) {
                 viewer.setCameraEntity(target);
-                viewer.setInvisible(true);
-                viewer.setNoGravity(true);
+                viewer.changeGameMode(GameMode.SPECTATOR);
+                component.setTime(component.getTime() -1, viewer);
+                viewer.sendMessage(Text.literal("Observing " + target.getName().getString() + " " + component.getTime() / 20).formatted(Formatting.DARK_AQUA), true);
             }
         } else {
-            if (viewer.getCameraEntity() == null || viewer.getCameraEntity() == target) {
-                viewer.setCameraEntity(viewer);
-                viewer.setInvisible(false);
-                viewer.setNoGravity(false);
-            }
+            viewer.setCameraEntity(viewer);
+            viewer.changeGameMode(GameMode.SURVIVAL);
+            double[] pos = component.getPosition();
+            Deipotentia.LOGGING.debug(String.format("[TickViewing] Setting position to %s, %s, %s", pos[0], pos[1], pos[2]));
+            viewer.teleport(pos[0], pos[1], pos[2]);
+            component.setTime(-1, viewer);
+            component.setViewing(false, viewer);
         }
     }
 
