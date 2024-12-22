@@ -21,12 +21,12 @@ public class DRecipes {
     public static void register() {}
 
     private static <T extends Recipe<?>> RecipeSerializer<T> registerSerializer(String id, RecipeSerializer<T> serInstance) {
-        return Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(Deipotentia.MOD_ID, id),
+        return Registry.register(Registries.RECIPE_SERIALIZER, Deipotentia.id(id),
                 serInstance);
     }
 
     private static <T extends Recipe<?>> RecipeType<T> registerType(String id, RecipeType<T> typeInstance) {
-        return Registry.register(Registries.RECIPE_TYPE, new Identifier(Deipotentia.MOD_ID, id),
+        return Registry.register(Registries.RECIPE_TYPE, Deipotentia.id(id),
                 typeInstance);
     }
 }

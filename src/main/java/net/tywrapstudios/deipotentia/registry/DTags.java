@@ -20,7 +20,7 @@ public class DTags {
         private final TagKey<Item> tagKey;
 
         Items(String name) {
-            this.tagKey = of(new Identifier(Deipotentia.MOD_ID, name));
+            this.tagKey = of(Deipotentia.id(name));
         }
 
         Items(Identifier id) {
@@ -40,7 +40,7 @@ public class DTags {
         private final TagKey<Block> tagKey;
 
         Blocks(String name) {
-            this.tagKey = of(new Identifier(Deipotentia.MOD_ID, name));
+            this.tagKey = of(Deipotentia.id(name));
         }
 
         public TagKey<Block> get() { return tagKey; }

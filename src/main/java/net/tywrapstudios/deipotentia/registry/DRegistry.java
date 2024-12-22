@@ -81,7 +81,7 @@ public class DRegistry {
 
         private static Item create(String name, Item item) {
             ITEMS.add(item);
-            return Registry.register(Registries.ITEM, new Identifier(Deipotentia.MOD_ID, name), item);
+            return Registry.register(Registries.ITEM, Deipotentia.id(name), item);
         }
 
         public static List<Item> register() {
@@ -107,7 +107,7 @@ public class DRegistry {
         private static Block create(String name, Block block) {
             BLOCKS.add(block);
             createBlockItem(name, block);
-            return Registry.register(Registries.BLOCK, new Identifier(Deipotentia.MOD_ID, name), block);
+            return Registry.register(Registries.BLOCK, Deipotentia.id(name), block);
         }
 
         private static Block create(String name, Block block, boolean includeItem) {
@@ -115,11 +115,11 @@ public class DRegistry {
                 BLOCKS.add(block);
                 createBlockItem(name, block);
             }
-            return Registry.register(Registries.BLOCK, new Identifier(Deipotentia.MOD_ID, name), block);
+            return Registry.register(Registries.BLOCK, Deipotentia.id(name), block);
         }
 
         private static void createBlockItem(String name, Block block) {
-            Registry.register(Registries.ITEM, new Identifier(Deipotentia.MOD_ID, name), new BlockItem(block, new FabricItemSettings()));
+            Registry.register(Registries.ITEM, Deipotentia.id(name), new BlockItem(block, new FabricItemSettings()));
         }
 
         public static List<Block> register() {

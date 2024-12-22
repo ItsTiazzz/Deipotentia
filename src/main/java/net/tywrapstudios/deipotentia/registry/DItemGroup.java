@@ -13,7 +13,7 @@ public class DItemGroup {
 
     static {
         DEI_GROUP = Registry.register(Registries.ITEM_GROUP,
-                new Identifier(Deipotentia.MOD_ID, "deipotentia"), FabricItemGroup.builder()
+                Deipotentia.id("deipotentia"), FabricItemGroup.builder()
                         .displayName(Text.translatable("itemgroup.deipotentia"))
                         .icon(() -> new ItemStack(DRegistry.DItems.VALSOULSTRANGLER))
                         .entries((displayContext, entries) -> {

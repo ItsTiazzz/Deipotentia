@@ -15,7 +15,7 @@ public class DEnchantments {
     }
 
     private static Enchantment create(String id, Enchantment entry) {
-        return Registry.register(Registries.ENCHANTMENT, new Identifier(Deipotentia.MOD_ID, id), entry);
+        return Registry.register(Registries.ENCHANTMENT, Deipotentia.id(id), entry);
     }
 
     public static void register() {}

@@ -14,7 +14,7 @@ public class DSounds {
     }
 
     private static SoundEvent registerSoundEvent(String name) {
-        Identifier id = new Identifier(Deipotentia.MOD_ID, name);
+        Identifier id = Deipotentia.id(name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 

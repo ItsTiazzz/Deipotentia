@@ -3,8 +3,10 @@ package net.tywrapstudios.deipotentia;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.Identifier;
 import net.tywrapstudios.blossombridge.api.config.ConfigManager;
 import net.tywrapstudios.blossombridge.api.logging.LoggingHandler;
+import net.tywrapstudios.deipotentia.command.StuckCommand;
 import net.tywrapstudios.deipotentia.config.DeiConfig;
 import net.tywrapstudios.deipotentia.enchantment.SoulBoundEnchantment;
 import net.tywrapstudios.deipotentia.loot.LootStuffIdkWhatToCallThisClass;
@@ -32,6 +34,7 @@ public class Deipotentia implements ModInitializer {
 		DItemGroup.register();
 		DEnchantments.register();
 		DSounds.register();
+		StuckCommand.register();
 		LOGGING.debug("Registered Content.");
 
 		SoulItem.Logic.initialize();
@@ -42,5 +45,9 @@ public class Deipotentia implements ModInitializer {
 
 		LOGGING.info("May your woes have Deipotentia, and their wishes be granted.");
 		LOGGING.debugWarning("You enabled [Debug Mode] in the Config. Beware that this may occasionally spam your logs full of junk check results!");
+	}
+
+	public static Identifier id(String P) {
+		return new Identifier(MOD_ID, P);
 	}
 }
