@@ -40,11 +40,17 @@ public class SoulItem extends Item {
                 UUID linkedPlayerUuid = nbt.getUuid(NBT.UUID);
                 ServerPlayerEntity linkedPlayer = user.getServer().getPlayerManager().getPlayer(linkedPlayerUuid);
                 PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(user);
+                int ticks = 10*20;
+                boolean self = !Deipotentia.CONFIG_MANAGER.getConfig().better_viewing && user == linkedPlayer;
+
+                if (self) {
+                    ticks = 3*20;
+                }
 
                 if (linkedPlayer != null) {
-                    component.setViewingData(true, linkedPlayerUuid, user.getX(), user.getY(), user.getZ(), 10*20, user);
+                    component.setViewingData(true, linkedPlayerUuid, user.getX(), user.getY(), user.getZ(), ticks, self, user);
                     user.getItemCooldownManager().set(this, 15 * 20);
-                    Deipotentia.LOGGING.debug(String.format("[SoulItem$use] Setting ViewingData to %s, %s, %s, %s, %s, %s", true, user.getX(), user.getY(), user.getZ(), 10*20, user.getName().getString()));
+                    Deipotentia.LOGGING.debug(String.format("[SoulItem$use] Setting ViewingData to %s, %s, %s, %s, %s, %s, %s", true, user.getX(), user.getY(), user.getZ(), ticks, self, user.getName().getString()));
                 }
             }
         }
@@ -64,7 +70,7 @@ public class SoulItem extends Item {
                 viewer.setCameraEntity(target);
                 viewer.changeGameMode(GameMode.SPECTATOR);
                 component.setTime(component.getTime() -1, viewer);
-                viewer.sendMessage(Text.literal("Observing " + target.getName().getString() + " " + component.getTime() / 20).formatted(Formatting.DARK_AQUA), true);
+                viewer.sendMessage(Text.literal("Observing " + target.getName().getString() + " " + component.getTime() / 20).formatted(Formatting.YELLOW), true);
             }
         } else {
             viewer.setCameraEntity(viewer);

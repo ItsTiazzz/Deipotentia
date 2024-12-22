@@ -9,10 +9,22 @@ import java.util.UUID;
 public class PlayerViewingComponent implements AutoSyncedComponent {
     private boolean isViewing = false;
     private UUID viewingTarget = null;
-    private int viewingTime = 0;
+    private int viewingTime = -1; // In ticks (-1 for idle state)
     private double x = 0;
     private double y = 62; // Sea Level
     private double z = 0;
+    private boolean dark = false;
+
+    public void setViewingData(boolean viewing, UUID target, double x, double y, double z, int time, boolean dark, PlayerEntity provider) {
+        this.isViewing = viewing;
+        this.viewingTarget = target;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.viewingTime = time;
+        this.dark = dark;
+        DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.sync(provider);
+    }
 
     public boolean isViewing() {
         return isViewing;
@@ -20,16 +32,6 @@ public class PlayerViewingComponent implements AutoSyncedComponent {
 
     public UUID getViewingTarget() {
         return viewingTarget;
-    }
-
-    public void setViewingData(boolean viewing, UUID target, double x, double y, double z, int time, PlayerEntity provider) {
-        this.isViewing = viewing;
-        this.viewingTarget = target;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.viewingTime = time;
-        DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.sync(provider);
     }
 
     public void setViewing(boolean viewing, PlayerEntity provider) {
@@ -62,6 +64,10 @@ public class PlayerViewingComponent implements AutoSyncedComponent {
         return viewingTime;
     }
 
+    public boolean isSelf() {
+        return dark;
+    }
+
     @Override
     public void readFromNbt(NbtCompound tag) {
         this.isViewing = tag.getBoolean("IsViewing");
@@ -72,6 +78,7 @@ public class PlayerViewingComponent implements AutoSyncedComponent {
         this.x = tag.getDouble("OriginX");
         this.y = tag.getDouble("OriginY");
         this.z = tag.getDouble("OriginZ");
+        this.dark = tag.getBoolean("Self");
     }
 
     @Override
@@ -84,5 +91,6 @@ public class PlayerViewingComponent implements AutoSyncedComponent {
         tag.putDouble("OriginX", this.x);
         tag.putDouble("OriginY", this.y);
         tag.putDouble("OriginZ", this.z);
+        tag.putBoolean("Self", this.dark);
     }
 }

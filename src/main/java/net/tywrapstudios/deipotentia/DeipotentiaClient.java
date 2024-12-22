@@ -16,11 +16,16 @@ import net.tywrapstudios.deipotentia.component.PlayerViewingComponent;
 import net.tywrapstudios.deipotentia.registry.DScreenHandlers;
 import net.tywrapstudios.deipotentia.screen.HephaestusForgeScreen;
 
+import java.util.Objects;
+
 @Environment(EnvType.CLIENT)
 public class DeipotentiaClient implements ClientModInitializer {
     public static final ManagedShaderEffect SOUL_VIEW = ShaderEffectManager.getInstance()
             .manage(Deipotentia.id("shaders/post/soul_view.json"));
+    public static final ManagedShaderEffect SOUL_VIEW_DARK = ShaderEffectManager.getInstance()
+            .manage(Deipotentia.id("shaders/post/soul_view_dark.json"));
     public static boolean SOUL_VIEW_ENABLED = false;
+    public static boolean DARK = false;
 
     @Override
     public void onInitializeClient() {
@@ -28,7 +33,11 @@ public class DeipotentiaClient implements ClientModInitializer {
 
         ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
             if (SOUL_VIEW_ENABLED) {
-                SOUL_VIEW.render(tickDelta);
+                if (DARK) {
+                    SOUL_VIEW_DARK.render(tickDelta);
+                } else {
+                    SOUL_VIEW.render(tickDelta);
+                }
             }
         });
 
@@ -36,6 +45,7 @@ public class DeipotentiaClient implements ClientModInitializer {
             if (client.player != null) {
                 PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(client.player);
                 SOUL_VIEW_ENABLED = component.isViewing();
+                DARK = component.isSelf();
             }
         });
 
