@@ -10,5 +10,6 @@ public class DeipotentiaDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModelGen::new);
 		pack.addProvider(TagGen.Block::new);
 		pack.addProvider(TagGen.Item::new);
+		pack.addProvider(LootTableGen::new);
 	}
 }
