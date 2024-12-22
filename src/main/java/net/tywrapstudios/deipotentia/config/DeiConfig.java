@@ -9,4 +9,5 @@ public class DeiConfig extends AbstractConfig {
     public boolean $1 = false;
     public int particle_density = 25;
     public boolean joke_mode = false;
+    public String stuck_command_id = "stuck";
 }
