@@ -5,7 +5,6 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.tywrapstudios.deipotentia.Deipotentia;
-import net.tywrapstudios.deipotentia.DeipotentiaComponents;
 
 public class PlayerPostMortemComponent implements ComponentV3, AutoSyncedComponent {
     private static final String NBT_KEY = "HasDied";
