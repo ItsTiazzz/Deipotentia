@@ -40,19 +40,7 @@ public class PlayerViewingComponent implements AutoSyncedComponent {
     }
 
     public double[] getPosition() {
-        return new double[] {getX(), getY(), getZ()};
-    }
-
-    private double getX() {
-        return x;
-    }
-
-    private double getY() {
-        return y;
-    }
-
-    private double getZ() {
-        return z;
+        return new double[] {x, y, z};
     }
 
     public void setTime(int time, PlayerEntity provider) {
