@@ -1,6 +1,12 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube",
   "textures": {
-    "all": "deipotentia:block/hephaestus_forge"
+    "down": "deipotentia:block/hephaestus_forge_bottom",
+    "east": "deipotentia:block/hephaestus_forge_side",
+    "north": "deipotentia:block/hephaestus_forge_front",
+    "particle": "deipotentia:block/hephaestus_forge_front",
+    "south": "deipotentia:block/hephaestus_forge_front",
+    "up": "deipotentia:block/hephaestus_forge_top",
+    "west": "deipotentia:block/hephaestus_forge_side"
   }
 }

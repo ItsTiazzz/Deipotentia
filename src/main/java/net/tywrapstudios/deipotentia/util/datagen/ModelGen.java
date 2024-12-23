@@ -13,7 +13,9 @@ public class ModelGen extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
-        generator.registerSimpleCubeAll(DBlocks.HEPHAESTUS_FORGE);
+        TextureMap textureMap = (new TextureMap()).put(TextureKey.PARTICLE, TextureMap.getSubId(DBlocks.HEPHAESTUS_FORGE, "_front")).put(TextureKey.DOWN, TextureMap.getSubId(DBlocks.HEPHAESTUS_FORGE, "_bottom")).put(TextureKey.UP, TextureMap.getSubId(DBlocks.HEPHAESTUS_FORGE, "_top")).put(TextureKey.NORTH, TextureMap.getSubId(DBlocks.HEPHAESTUS_FORGE, "_front")).put(TextureKey.SOUTH, TextureMap.getSubId(DBlocks.HEPHAESTUS_FORGE, "_front")).put(TextureKey.EAST, TextureMap.getSubId(DBlocks.HEPHAESTUS_FORGE, "_side")).put(TextureKey.WEST, TextureMap.getSubId(DBlocks.HEPHAESTUS_FORGE, "_side"));
+        generator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(DBlocks.HEPHAESTUS_FORGE, Models.CUBE.upload(DBlocks.HEPHAESTUS_FORGE, textureMap, generator.modelCollector)));
+
         generator.registerWoolAndCarpet(DBlocks.CLOTH, DBlocks.CLOTH_CARPET);
     }
 
