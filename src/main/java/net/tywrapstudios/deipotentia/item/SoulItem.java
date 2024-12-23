@@ -50,6 +50,9 @@ public class SoulItem extends Item {
                 if (linkedPlayer != null) {
                     component.setViewingData(true, linkedPlayerUuid, ticks, self, user);
                     user.getItemCooldownManager().set(this, 15 * 20);
+                    if (!self) {
+                        linkedPlayer.sendMessage(Text.translatable("misc.deipotentia.text.presence").formatted(Formatting.GRAY), true);
+                    }
                 }
             }
         }
@@ -231,7 +234,7 @@ public class SoulItem extends Item {
                         Soul Bleacher and it will obfuscate the text for anyone to read.
                         This will also give you the ability to die again and get a new item.""", player.getName().getString()))
                         .formatted(Formatting.GRAY));
-                component.setHasDiedBefore(true, player);
+                component.setDeathData(true, player);
                 Deipotentia.LOGGING.debug("Valid death detected - giving soul item to " + player.getName().getString());
             }
         }

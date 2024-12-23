@@ -11,6 +11,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.GameMode;
 import net.tywrapstudios.deipotentia.Deipotentia;
+import net.tywrapstudios.deipotentia.component.DeipotentiaComponents;
+import net.tywrapstudios.deipotentia.component.PlayerViewingComponent;
 
 public class StuckCommand {
     public static void register() {

@@ -21,7 +21,7 @@ public class SoulBleacherItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         PlayerPostMortemComponent component = DeipotentiaComponents.PLAYER_DEATH_COMPONENT.get(player);
-        component.setHasDiedBefore(false, player);
+        component.setDeathData(false, player);
 
         if (world.isClient()) return TypedActionResult.pass(player.getStackInHand(hand));
 
