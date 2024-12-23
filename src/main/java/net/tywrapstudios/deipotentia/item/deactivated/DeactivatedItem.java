@@ -32,7 +32,6 @@ public abstract class DeactivatedItem extends Item implements Deactivated {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (getActivatingStatus()) {
-            handleBeforeActivation();
             return activate(world, user, hand, getActivatorUuid(), getActivatedItem());
         } else {
             world.playSound(null,
@@ -53,6 +52,7 @@ public abstract class DeactivatedItem extends Item implements Deactivated {
         Deipotentia.LOGGING.debug(activatorUuid + "|" + current + "|" + god);
 
         if (Objects.equals(activatorUuid, current) || Objects.equals(god, current)) {
+            handleBeforeActivation();
             world.playSound(null,
                     user.getX(),
                     user.getY(),
