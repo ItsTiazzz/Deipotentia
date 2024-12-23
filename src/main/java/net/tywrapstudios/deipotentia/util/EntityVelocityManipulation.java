@@ -54,6 +54,7 @@ public class EntityVelocityManipulation {
         entity.setVelocity(0, 0, 0);
         entity.velocityDirty = true;
         entity.velocityModified = true;
+        entity.fallDistance = entity.getSafeFallDistance();
         entity.setNoGravity(true);
 
         TickScheduler.schedule(20, () -> {

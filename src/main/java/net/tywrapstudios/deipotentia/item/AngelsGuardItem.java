@@ -33,7 +33,6 @@ public class AngelsGuardItem extends Item {
                 Box boundingBox = user.getBoundingBox().expand(REPULSION_RADIUS);
                 for (Entity entity : world.getNonSpectatingEntities(Entity.class, boundingBox)) {
                     EntityVelocityManipulation.pushEntityAwayFromPlayer(player, entity);
-                    Deipotentia.LOGGING.debug("Found entity in radius of class: " + entity.getClass().getName());
                 }
                 EntityVelocityManipulation.spawnRepulsionParticles(player.getServerWorld(), player, Deipotentia.CONFIG_MANAGER.getConfig().particle_density);
                 EntityVelocityManipulation.freezeEntityForRepulsingItem(player);
