@@ -8,9 +8,11 @@ import net.tywrapstudios.deipotentia.Deipotentia;
 
 public class DSounds {
     public static final SoundEvent BLAHAJ_HONK;
+    public static final SoundEvent WWDITD;
 
     static {
         BLAHAJ_HONK = registerSoundEvent("blahaj_honk");
+        WWDITD = registerSoundEvent("what_we_did_in_the_desert");
     }
 
     private static SoundEvent registerSoundEvent(String name) {

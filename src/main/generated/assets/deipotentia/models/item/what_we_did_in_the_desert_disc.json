@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "deipotentia:item/what_we_did_in_the_desert_disc"
+  }
+}

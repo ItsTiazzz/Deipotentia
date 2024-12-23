@@ -4,5 +4,13 @@
     "sounds": [
       "deipotentia:blahaj_honk"
     ]
+  },
+  "what_we_did_in_the_desert": {
+    "sounds": [
+      {
+        "name": "deipotentia:what_we_did_in_the_desert",
+        "stream": true
+      }
+    ]
   }
 }

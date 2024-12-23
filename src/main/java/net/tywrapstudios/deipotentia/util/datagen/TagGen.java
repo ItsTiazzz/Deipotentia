@@ -4,7 +4,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
-import net.tywrapstudios.deipotentia.registry.DRegistry;
+import net.minecraft.registry.tag.ItemTags;
+import net.tywrapstudios.deipotentia.registry.DRegistry.*;
 import net.tywrapstudios.deipotentia.registry.DTags;
 
 import java.util.concurrent.CompletableFuture;
@@ -40,30 +41,34 @@ public class TagGen {
 
         protected void generateTags() {
             getOrCreateTagBuilder(DTags.Items.SICKLES.get())
-                    .add(DRegistry.DItems.CRIMSON_SICKLE)
-                    .add(DRegistry.DItems.NYMPH_SICKLE)
-                    .add(DRegistry.DItems.WARPED_SICKLE)
-                    .add(DRegistry.DItems.STURDY_SICKLE);
+                    .add(DItems.CRIMSON_SICKLE)
+                    .add(DItems.NYMPH_SICKLE)
+                    .add(DItems.WARPED_SICKLE)
+                    .add(DItems.STURDY_SICKLE);
             getOrCreateTagBuilder(DTags.Items.NON_STURDY.get())
-                    .add(DRegistry.DItems.CRIMSON_SICKLE)
-                    .add(DRegistry.DItems.NYMPH_SICKLE)
-                    .add(DRegistry.DItems.WARPED_SICKLE);
+                    .add(DItems.CRIMSON_SICKLE)
+                    .add(DItems.NYMPH_SICKLE)
+                    .add(DItems.WARPED_SICKLE);
             getOrCreateTagBuilder(DTags.Items.REPULSING.get())
-                    .add(DRegistry.DItems.ANGELS_GUARD);
+                    .add(DItems.ANGELS_GUARD);
             getOrCreateTagBuilder(DTags.Items.RANGED_WEAPONS.get())
-                    .add(DRegistry.DItems.CRIMSON_SICKLE)
-                    .add(DRegistry.DItems.WARPED_SICKLE)
-                    .add(DRegistry.DItems.STURDY_SICKLE)
-                    .add(DRegistry.DItems.NYMPH_SICKLE);
+                    .add(DItems.CRIMSON_SICKLE)
+                    .add(DItems.WARPED_SICKLE)
+                    .add(DItems.STURDY_SICKLE)
+                    .add(DItems.NYMPH_SICKLE);
             getOrCreateTagBuilder(DTags.Items.DISPLAYABLE.get())
-                    .add(DRegistry.DItems.CRIMSON_SICKLE)
-                    .add(DRegistry.DItems.WARPED_SICKLE)
-                    .add(DRegistry.DItems.STURDY_SICKLE)
-                    .add(DRegistry.DItems.NYMPH_SICKLE);
+                    .add(DItems.CRIMSON_SICKLE)
+                    .add(DItems.WARPED_SICKLE)
+                    .add(DItems.STURDY_SICKLE)
+                    .add(DItems.NYMPH_SICKLE);
             getOrCreateTagBuilder(DTags.Items.PLUSH.get())
-                    .add(DRegistry.DItems.BLAHAJ)
-                    .add(DRegistry.DItems.BLAHAJ_GODS)
-                    .add(DRegistry.DItems.BLAHAJ_GODS_DEACTIVATED);
+                    .add(DItems.BLAHAJ)
+                    .add(DItems.BLAHAJ_GODS)
+                    .add(DItems.BLAHAJ_GODS_DEACTIVATED);
+            getOrCreateTagBuilder(ItemTags.MUSIC_DISCS)
+                    .add(DItems.WHAT_WE_DID_IN_THE_DESERT_DISC);
+            getOrCreateTagBuilder(ItemTags.CREEPER_DROP_MUSIC_DISCS)
+                    .add(DItems.WHAT_WE_DID_IN_THE_DESERT_DISC);
         }
 
         @Override

@@ -4,9 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
-import net.tywrapstudios.deipotentia.Deipotentia;
-import net.tywrapstudios.deipotentia.registry.DRegistry;
+import net.tywrapstudios.deipotentia.registry.DRegistry.*;
 
 public class ModelGen extends FabricModelProvider {
     public ModelGen(FabricDataOutput output) {
@@ -15,22 +13,23 @@ public class ModelGen extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
-        generator.registerSimpleCubeAll(DRegistry.DBlocks.HEPHAESTUS_FORGE);
-        generator.registerWoolAndCarpet(DRegistry.DBlocks.CLOTH, DRegistry.DBlocks.CLOTH_CARPET);
+        generator.registerSimpleCubeAll(DBlocks.HEPHAESTUS_FORGE);
+        generator.registerWoolAndCarpet(DBlocks.CLOTH, DBlocks.CLOTH_CARPET);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator generator) {
-        simpleItem(DRegistry.DItems.VALSOULSTRANGLER, generator);
-        simpleItem(DRegistry.DItems.VALSOULSTRANGLER_DEACTIVATED, generator);
-        simpleItem(DRegistry.DItems.ANGELS_GUARD, generator);
-        simpleItem(DRegistry.DItems.ANGELS_GUARD_DEACTIVATED, generator);
-        simpleItem(DRegistry.DItems.SOUL_ITEM, generator);
-        simpleItem(DRegistry.DItems.EMPTY_SOUL, generator);
-        simpleItem(DRegistry.DItems.SOUL_BLEACHER, generator);
-        simpleItem(DRegistry.DItems.STURDY_TEMPLATE, generator);
-        simpleItem(DRegistry.DBlocks.CLOTH_CARPET.asItem(), generator);
-        simpleItem(DRegistry.DItems.FLAX, generator);
+        simpleItem(DItems.VALSOULSTRANGLER, generator);
+        simpleItem(DItems.VALSOULSTRANGLER_DEACTIVATED, generator);
+        simpleItem(DItems.ANGELS_GUARD, generator);
+        simpleItem(DItems.ANGELS_GUARD_DEACTIVATED, generator);
+        simpleItem(DItems.SOUL_ITEM, generator);
+        simpleItem(DItems.EMPTY_SOUL, generator);
+        simpleItem(DItems.SOUL_BLEACHER, generator);
+        simpleItem(DItems.STURDY_TEMPLATE, generator);
+        simpleItem(DBlocks.CLOTH_CARPET.asItem(), generator);
+        simpleItem(DItems.FLAX, generator);
+        simpleItem(DItems.WHAT_WE_DID_IN_THE_DESERT_DISC, generator);
     }
 
     private void simpleItem(Item item, ItemModelGenerator generator) {
