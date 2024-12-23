@@ -14,5 +14,6 @@ public class LootTableGen extends FabricBlockLootTableProvider {
         addDrop(DBlocks.BLAHAJ_BLOCK);
         addDrop(DBlocks.CLOTH);
         addDrop(DBlocks.CLOTH_CARPET);
+        addDrop(DBlocks.HEPHAESTUS_FORGE);
     }
 }

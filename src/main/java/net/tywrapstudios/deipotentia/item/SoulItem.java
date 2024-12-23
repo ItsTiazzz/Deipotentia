@@ -48,9 +48,8 @@ public class SoulItem extends Item {
                 }
 
                 if (linkedPlayer != null) {
-                    component.setViewingData(true, linkedPlayerUuid, user.getX(), user.getY(), user.getZ(), ticks, self, user);
+                    component.setViewingData(true, linkedPlayerUuid, ticks, self, user);
                     user.getItemCooldownManager().set(this, 15 * 20);
-                    Deipotentia.LOGGING.debug(String.format("[SoulItem$use] Setting ViewingData to %s, %s, %s, %s, %s, %s, %s", true, user.getX(), user.getY(), user.getZ(), ticks, self, user.getName().getString()));
                 }
             }
         }
@@ -74,7 +73,7 @@ public class SoulItem extends Item {
             }
         } else {
             viewer.setCameraEntity(viewer);
-            viewer.changeGameMode(GameMode.SURVIVAL);
+            viewer.changeGameMode(component.getGameMode());
             double[] pos = component.getPosition();
             Deipotentia.LOGGING.debug(String.format("[TickViewing] Setting position to %s, %s, %s", pos[0], pos[1], pos[2]));
             viewer.teleport(pos[0], pos[1], pos[2]);
