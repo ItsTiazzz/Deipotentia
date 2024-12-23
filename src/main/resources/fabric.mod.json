@@ -9,6 +9,7 @@
 	],
 	"contact": {
 	},
+	"icon": "assets/deipotentia/textures/item/soul_item.png",
 	"license": "ARR",
 	"environment": "*",
 	"entrypoints": {

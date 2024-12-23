@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:sand"
+    },
+    "$": {
+      "item": "minecraft:gravel"
+    },
+    "&": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "#&$",
+    "$$$"
+  ],
+  "result": {
+    "item": "deipotentia:what_we_did_in_the_desert_disc"
+  }
+}
