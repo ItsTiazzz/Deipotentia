@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.tywrapstudios.deipotentia.Deipotentia;
 import net.tywrapstudios.deipotentia.block.BlahajBlock;
+import net.tywrapstudios.deipotentia.block.CrateBlock;
 import net.tywrapstudios.deipotentia.block.HephaestusForgeBlock;
 import net.tywrapstudios.deipotentia.item.*;
 import net.tywrapstudios.deipotentia.item.deactivated.DeactivatedAG;
@@ -24,6 +25,7 @@ import net.tywrapstudios.deipotentia.item.sickles.CrimsonSickleItem;
 import net.tywrapstudios.deipotentia.item.sickles.NymphSickleItem;
 import net.tywrapstudios.deipotentia.item.sickles.SturdySickleItem;
 import net.tywrapstudios.deipotentia.item.sickles.WarpedSickleItem;
+import net.tywrapstudios.deipotentia.util.datagen.TagGen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,12 +103,14 @@ public class DRegistry {
         public static final Block CLOTH;
         public static final Block CLOTH_CARPET;
         public static final Block BLAHAJ_BLOCK;
+        public static final Block CRATE;
 
         static {
             HEPHAESTUS_FORGE = create("hephaestus_forge", new HephaestusForgeBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
             CLOTH = create("cloth", new Block(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)));
             CLOTH_CARPET = create("cloth_carpet", new CarpetBlock((FabricBlockSettings.copyOf(Blocks.WHITE_CARPET))));
             BLAHAJ_BLOCK = create("blahaj", new BlahajBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL)), false);
+            CRATE = create("crate", new CrateBlock(FabricBlockSettings.copyOf(Blocks.BARREL)));
         }
 
         private static Block create(String name, Block block) {

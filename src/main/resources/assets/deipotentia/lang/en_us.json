@@ -23,8 +23,10 @@
   "block.deipotentia.hephaestus_forge": "Hephaestus Forge",
   "block.deipotentia.cloth": "Cloth Block",
   "block.deipotentia.cloth_carpet": "Cloth",
+  "block.deipotentia.crate": "Crate",
 
   "container.deipotentia.hephaestus_forge": "The Forge",
+  "container.deipotentia.crate": "Crate",
 
   "misc.deipotentia.text.invalid_uuid_0": "Pffft, you don't have it in you.",
   "misc.deipotentia.text.invalid_uuid_1": "Did you really think you're worthy?",
