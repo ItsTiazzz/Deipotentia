@@ -11,8 +11,8 @@ import net.tywrapstudios.deipotentia.registry.DTags;
 import java.util.concurrent.CompletableFuture;
 
 public class TagGen {
-    public static class Block extends FabricTagProvider.BlockTagProvider {
-        public Block(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public static class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
+        public BlockTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
             super(output, registriesFuture);
         }
 
@@ -34,8 +34,8 @@ public class TagGen {
         }
     }
 
-    public static class Item extends FabricTagProvider.ItemTagProvider {
-        public Item(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+    public static class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
+        public ItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
             super(output, completableFuture, null);
         }
 
@@ -69,6 +69,8 @@ public class TagGen {
                     .add(DItems.WHAT_WE_DID_IN_THE_DESERT_DISC);
             getOrCreateTagBuilder(ItemTags.CREEPER_DROP_MUSIC_DISCS)
                     .add(DItems.WHAT_WE_DID_IN_THE_DESERT_DISC);
+            getOrCreateTagBuilder(DTags.Items.RETAIN_DURABILITY.get())
+                    .add(DItems.VALSOULSTRANGLER);
         }
 
         @Override

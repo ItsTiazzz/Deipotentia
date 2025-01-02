@@ -8,8 +8,8 @@ public class DeipotentiaDataGenerator implements DataGeneratorEntrypoint {
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModelGen::new);
-		pack.addProvider(TagGen.Block::new);
-		pack.addProvider(TagGen.Item::new);
+		pack.addProvider(TagGen.BlockTagProvider::new);
+		pack.addProvider(TagGen.ItemTagProvider::new);
 		pack.addProvider(LootTableGen::new);
 	}
 }
