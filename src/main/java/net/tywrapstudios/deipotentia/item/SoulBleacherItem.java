@@ -3,15 +3,11 @@ package net.tywrapstudios.deipotentia.item;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.tywrapstudios.deipotentia.component.DeipotentiaComponents;
 import net.tywrapstudios.deipotentia.component.PlayerPostMortemComponent;
-import net.tywrapstudios.deipotentia.registry.DRegistry;
-import net.tywrapstudios.deipotentia.util.NbtUtilities;
 
 public class SoulBleacherItem extends Item {
     public SoulBleacherItem(Settings settings) {
