@@ -1,8 +1,8 @@
-// 1.20.1	2025-01-02T23:19:53.250381	Deipotentia/Tags for minecraft:item
+// 1.20.1	2025-01-02T23:28:53.3551914	Deipotentia/Tags for minecraft:item
 6d6a48eb16505c431c28644ed25543c23d31f10d data\minecraft\tags\items\creeper_drop_music_discs.json
 7c0f7c7186c05117923a18aa89a9f3dfdc2a94b1 data\deipotentia\tags\items\repulsing.json
+d46973caab80c5e96298abd8c2bc24caed7cbbd7 data\enchancement\tags\items\retains_durability.json
 e2d3fe93a772defc6e70fc6bc2bf55aea3b705f5 data\deipotentia\tags\items\non_sturdy.json
-d46973caab80c5e96298abd8c2bc24caed7cbbd7 data\enchancement\tags\items\retain_durability.json
 99e99f3d8c890ed9710867ead587eb8c5fb63c10 data\arsenal\tags\items\ranged_weapons.json
 d57a257af52531f016932492ba5df23967579606 data\deipotentia\tags\items\plush.json
 99e99f3d8c890ed9710867ead587eb8c5fb63c10 data\arsenal\tags\items\displayable.json

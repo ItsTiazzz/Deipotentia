@@ -16,7 +16,7 @@ public class DTags {
         BIG_WEAPONS(new Identifier("arsenal", "big_weapons")),
         RANGED_WEAPONS(new Identifier("arsenal", "ranged_weapons")),
         PLUSH("plush"),
-        RETAIN_DURABILITY(new Identifier("enchancement", "retain_durability")),;
+        RETAIN_DURABILITY(new Identifier("enchancement", "retains_durability")),;
 
         private final TagKey<Item> tagKey;
 
