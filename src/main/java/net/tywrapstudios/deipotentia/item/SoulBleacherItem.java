@@ -21,27 +21,12 @@ public class SoulBleacherItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         PlayerPostMortemComponent component = DeipotentiaComponents.PLAYER_DEATH_COMPONENT.get(player);
-        component.setDeathData(false, player);
+        component.setDeathData(false, component.getIdentifier() + 1, player);
 
         if (world.isClient()) return TypedActionResult.pass(player.getStackInHand(hand));
 
         ItemStack bleacherStack = player.getStackInHand(hand);
-        ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-        MinecraftServer server = serverPlayer.getServer();
-
-        boolean cleared;
-
-        cleared = NbtUtilities.checkOnlinePlayersForItem(server, DRegistry.DItems.SOUL_ITEM, SoulItem.NBT.CLEANED);
-        if (cleared) {
-            bleacherStack.decrement(1);
-            return TypedActionResult.success(bleacherStack, world.isClient());
-        }
-        cleared = NbtUtilities.checkOfflinePlayersForItem(server, "soul_item", SoulItem.NBT.CLEANED);
-        if (cleared) {
-            bleacherStack.decrement(1);
-            return TypedActionResult.success(bleacherStack, world.isClient());
-        }
-
-        return TypedActionResult.pass(bleacherStack);
+        bleacherStack.decrement(1);
+        return TypedActionResult.success(bleacherStack, world.isClient());
     }
 }

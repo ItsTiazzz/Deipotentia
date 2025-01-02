@@ -7,26 +7,35 @@ import net.tywrapstudios.deipotentia.Deipotentia;
 
 public class PlayerPostMortemComponent implements AutoSyncedComponent {
     private boolean hasDiedBefore = false;
+    private int identifier = 0;
 
-    public void setDeathData(boolean hasDied, PlayerEntity provider) {
-        if (this.hasDiedBefore != hasDied) {
-            this.hasDiedBefore = hasDied;
-            DeipotentiaComponents.PLAYER_DEATH_COMPONENT.sync(provider);
-        }
+    public void setDeathData(boolean hasDied, int identifier, PlayerEntity provider) {
+        this.hasDiedBefore = hasDied;
+        this.identifier = identifier;
+        DeipotentiaComponents.PLAYER_DEATH_COMPONENT.sync(provider);
     }
     
     public boolean hasDiedBefore() {
         return hasDiedBefore;
     }
 
+    public int getIdentifier() {
+        return identifier;
+    }
+
+    public boolean verifyIdentifier(int identifier) {
+        return this.identifier == identifier;
+    }
+
     @Override
     public void readFromNbt(NbtCompound tag) {
-        this.hasDiedBefore = tag.contains("HasDied") && tag.getBoolean("HasDied");
+        this.hasDiedBefore = tag.getBoolean("HasDied");
+        this.identifier = tag.getInt("Identifier");
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("HasDied", this.hasDiedBefore);
-        Deipotentia.LOGGING.debug("Writing NBT - HasDied: " + this.hasDiedBefore);
+        tag.putInt("Identifier", this.identifier);
     }
 }

@@ -20,7 +20,6 @@ import net.tywrapstudios.deipotentia.component.DeipotentiaComponents;
 import net.tywrapstudios.deipotentia.component.PlayerPostMortemComponent;
 import net.tywrapstudios.deipotentia.component.PlayerViewingComponent;
 import net.tywrapstudios.deipotentia.registry.DRegistry;
-import net.tywrapstudios.deipotentia.util.TickScheduler;
 
 import java.util.List;
 import java.util.Random;
@@ -34,12 +33,20 @@ public class SoulItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
+        PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(user);
         if (!world.isClient() && stack.hasNbt()) {
             NbtCompound nbt = stack.getNbt();
             if (nbt != null && nbt.contains(NBT.UUID)) {
                 UUID linkedPlayerUuid = nbt.getUuid(NBT.UUID);
                 ServerPlayerEntity linkedPlayer = user.getServer().getPlayerManager().getPlayer(linkedPlayerUuid);
-                PlayerViewingComponent component = DeipotentiaComponents.PLAYER_VIEWING_COMPONENT.get(user);
+                assert linkedPlayer != null;
+
+                PlayerPostMortemComponent component$1 = DeipotentiaComponents.PLAYER_DEATH_COMPONENT.get(linkedPlayer);
+                if (!component$1.verifyIdentifier(nbt.getInt(NBT.IDENTIFIER))) {
+                    nbt.putBoolean(NBT.CLEANED, true);
+                    return TypedActionResult.pass(stack);
+                }
+
                 int ticks = 10*20;
                 boolean self = !Deipotentia.CONFIG_MANAGER.getConfig().better_viewing && user == linkedPlayer;
 
@@ -47,12 +54,10 @@ public class SoulItem extends Item {
                     ticks = 3*20;
                 }
 
-                if (linkedPlayer != null) {
-                    component.setViewingData(true, linkedPlayerUuid, ticks, self, user);
-                    user.getItemCooldownManager().set(this, 15 * 20);
-                    if (!self) {
-                        linkedPlayer.sendMessage(Text.translatable("misc.deipotentia.text.presence").formatted(Formatting.GRAY), true);
-                    }
+                component.setViewingData(true, linkedPlayerUuid, ticks, self, user);
+                user.getItemCooldownManager().set(this, 15 * 20);
+                if (!self) {
+                    linkedPlayer.sendMessage(Text.translatable("misc.deipotentia.text.presence").formatted(Formatting.GRAY), true);
                 }
             }
         }
@@ -167,7 +172,8 @@ public class SoulItem extends Item {
     }
 
     public static ItemStack createSoulItemStack(ServerPlayerEntity player) {
-        ItemStack soulItem = new ItemStack(DRegistry.DItems.SOUL_ITEM); // Replace with your actual item
+        ItemStack soulItem = new ItemStack(DRegistry.DItems.SOUL_ITEM);
+        PlayerPostMortemComponent component = DeipotentiaComponents.PLAYER_DEATH_COMPONENT.get(player);
 
         NbtCompound nbt = soulItem.getOrCreateNbt();
         nbt.putUuid(NBT.UUID, player.getUuid());
@@ -176,6 +182,7 @@ public class SoulItem extends Item {
         nbt.putString(NBT.POSITION, player.getPos().toString().replace("(", "").replace(")",""));
         nbt.putString(NBT.IP_ADDRESS, generateFakeIp());
         nbt.putBoolean(NBT.CLEANED, false);
+        nbt.putInt(NBT.IDENTIFIER, component.getIdentifier());
 
         return soulItem;
     }
@@ -195,6 +202,7 @@ public class SoulItem extends Item {
         protected static final String IP_ADDRESS = "LinkedIP";
         protected static final String POSITION = "LinkedPosition";
         protected static final String CLEANED = "IsClean";
+        protected static final String IDENTIFIER = "Identifier";
     }
 
     public static class Logic {
@@ -209,10 +217,10 @@ public class SoulItem extends Item {
         }
 
         private static void handlePostMortem(ServerPlayerEntity player) {
-            TickScheduler.schedule(10, () -> player.setNoGravity(false));
+            player.setNoGravity(false);
             PlayerPostMortemComponent component = DeipotentiaComponents.PLAYER_DEATH_COMPONENT.get(player);
 
-            Deipotentia.LOGGING.debug("HandlePostMortem - Player: " + player.getName().getString());
+            Deipotentia.LOGGING.debug("$handlePostMortem - Player: " + player.getName().getString());
             Deipotentia.LOGGING.debug("IsClient: " + player.getWorld().isClient());
             Deipotentia.LOGGING.debug("HasDiedBefore: " + component.hasDiedBefore());
 
@@ -221,8 +229,6 @@ public class SoulItem extends Item {
             }
 
             if (!player.getWorld().isClient() && !component.hasDiedBefore()) {
-                ItemStack soulItem = SoulItem.createSoulItemStack(player);
-                player.giveItemStack(soulItem);
                 player.sendMessage(Text.literal(String.format("""
                         Hey, %s, it seems this is the first time you've died.
                         You just received a Soul Manifestation Item,
@@ -234,22 +240,28 @@ public class SoulItem extends Item {
                         Soul Bleacher and it will obfuscate the text for anyone to read.
                         This will also give you the ability to die again and get a new item.""", player.getName().getString()))
                         .formatted(Formatting.GRAY));
-                component.setDeathData(true, player);
+                component.setDeathData(true, component.getIdentifier(), player);
+                ItemStack soulItem = SoulItem.createSoulItemStack(player);
+                player.giveItemStack(soulItem);
                 Deipotentia.LOGGING.debug("Valid death detected - giving soul item to " + player.getName().getString());
             }
         }
 
         private static void syncSoulItem(ServerPlayerEntity player) {
             float currentHealth = player.getHealth();
+            PlayerPostMortemComponent component = DeipotentiaComponents.PLAYER_DEATH_COMPONENT.get(player);
             String currentPos = player.getPos().toString().replace("(", "").replace(")", "");
 
             for (DefaultedList<ItemStack> list : List.of(player.getInventory().main, player.getInventory().offHand)) {
                 for (ItemStack stack : list) {
                     if (stack.getItem() == DRegistry.DItems.SOUL_ITEM && stack.hasNbt()) {
                         NbtCompound nbt = stack.getNbt();
-                        if (nbt != null && nbt.contains(NBT.UUID) &&
-                                nbt.getUuid(NBT.UUID).equals(player.getUuid()) &&
-                                !nbt.getBoolean(NBT.CLEANED)) {
+                        assert nbt != null;
+                        assert nbt.contains(NBT.UUID);
+                        if (!component.verifyIdentifier(nbt.getInt(NBT.IDENTIFIER))) {
+                            nbt.putBoolean(NBT.CLEANED, true);
+                        }
+                        if (nbt.getUuid(NBT.UUID).equals(player.getUuid()) && !nbt.getBoolean(NBT.CLEANED)) {
                             nbt.putFloat(NBT.HEALTH, currentHealth);
                             nbt.putString(NBT.POSITION, currentPos);
                         }
