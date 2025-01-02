@@ -25,8 +25,10 @@ import java.util.List;
 public class HephaestusForgeRecipe implements Recipe<SimpleInventory> {
     private final ItemStack output;
     private final List<Ingredient> recipeIngredients;
+    private final Identifier id;
 
-    public HephaestusForgeRecipe(List<Ingredient> ingredients, ItemStack itemStack) {
+    public HephaestusForgeRecipe(List<Ingredient> ingredients, ItemStack itemStack, Identifier id) {
+        this.id = id;
         this.output = itemStack;
         this.recipeIngredients = ingredients;
     }
@@ -63,7 +65,7 @@ public class HephaestusForgeRecipe implements Recipe<SimpleInventory> {
 
     @Override
     public Identifier getId() {
-        return Deipotentia.id("hephaestus_forging");
+        return this.id;
     }
 
     @Override
@@ -77,13 +79,11 @@ public class HephaestusForgeRecipe implements Recipe<SimpleInventory> {
     }
 
     public static class Type implements RecipeType<HephaestusForgeRecipe> {
-        private Type() {}
         public static final Type INSTANCE = new Type();
         public static final String ID = "hephaestus_forging";
     }
 
     public static class Serializer implements RecipeSerializer<HephaestusForgeRecipe> {
-        private Serializer() {}
         public static final Serializer INSTANCE = new Serializer();
         public static final String ID = "hephaestus_forging";
 
@@ -96,7 +96,7 @@ public class HephaestusForgeRecipe implements Recipe<SimpleInventory> {
                 throw new JsonParseException("Too many ingredients for HephaestusRecipe: " + id);
             } else {
                 ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
-                return new HephaestusForgeRecipe(ingredients, output);
+                return new HephaestusForgeRecipe(ingredients, output, id);
             }
         }
 
@@ -118,7 +118,7 @@ public class HephaestusForgeRecipe implements Recipe<SimpleInventory> {
             inputs.replaceAll(ignored -> Ingredient.fromPacket(buf));
 
             ItemStack output = buf.readItemStack();
-            return new HephaestusForgeRecipe(inputs, output);
+            return new HephaestusForgeRecipe(inputs, output, id);
         }
 
         @Override
