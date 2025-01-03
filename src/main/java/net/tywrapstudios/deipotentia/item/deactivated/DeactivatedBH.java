@@ -10,7 +10,7 @@ public class DeactivatedBH extends DeactivatedItem {
 
     @Override
     public String getActivatorUuid() {
-        return ""; // TODO: Add LazySpace's UUID here <3
+        return "7a4a8f5e-acd5-41d7-9e3d-998bfd623c3d";
     }
 
     @Override
