@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-02T23:28:53.3528063	Deipotentia/Model Definitions
+// 1.20.1	2025-01-05T23:26:05.5079511	Deipotentia/Model Definitions
 63a40a39c02e38d1317e00d54318892e27fa38e6 assets\deipotentia\models\block\cloth_carpet.json
 c0f1230a8df1f9e027cb69345a0ad173b40d8f81 assets\deipotentia\models\item\valsoulstrangler.json
 7b57bbc02de78d1b9b77ea52b7b30ccf04135297 assets\deipotentia\models\item\crate.json
@@ -19,6 +19,6 @@ af5cea44640ed70496fd712e766406125a45cd9d assets\deipotentia\blockstates\crate.js
 b67cc8f332a9d37f1ed2e615affffb63aab0974c assets\deipotentia\models\block\hephaestus_forge.json
 c30f0501624b69058af4b928083671e7dadeaf9a assets\deipotentia\blockstates\cloth_carpet.json
 3f0cb47b114877e84d81fb7f3780ce420d0d657d assets\deipotentia\models\item\what_we_did_in_the_desert_disc.json
-8d41d58df78fc6464983e39a5e65852a381a1767 assets\deipotentia\models\block\cloth.json
-2923ab33dfc11abf52813012ec9a126884b273da assets\deipotentia\models\item\flax.json
 b1c6325c0631b8c574354c5f15e917b1fe44381a assets\deipotentia\models\item\empty_soul.json
+2923ab33dfc11abf52813012ec9a126884b273da assets\deipotentia\models\item\flax.json
+8d41d58df78fc6464983e39a5e65852a381a1767 assets\deipotentia\models\block\cloth.json

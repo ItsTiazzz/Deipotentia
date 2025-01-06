@@ -72,13 +72,16 @@ public class SoulItem extends Item {
             return;
         }
 
+        if (target == null) {
+            component.setViewingData(false, null, 0, false, viewer);
+            return;
+        }
+
         if (component.getTime() > 0) {
-            if (target != null) {
-                viewer.setCameraEntity(target);
-                viewer.changeGameMode(GameMode.SPECTATOR);
-                component.setTime(component.getTime() -1, viewer);
-                viewer.sendMessage(Text.literal("Observing " + target.getName().getString() + " " + component.getTime() / 20).formatted(Formatting.YELLOW), true);
-            }
+            viewer.setCameraEntity(target);
+            viewer.changeGameMode(GameMode.SPECTATOR);
+            component.setTime(component.getTime() -1, viewer);
+            viewer.sendMessage(Text.literal("Observing " + target.getName().getString() + " " + component.getTime() / 20).formatted(Formatting.YELLOW), true);
         } else {
             viewer.setCameraEntity(viewer);
             viewer.changeGameMode(component.getGameMode());
